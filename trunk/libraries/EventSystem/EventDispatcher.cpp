@@ -1,29 +1,43 @@
-/*
-* EventDispatcher.cpp
-*
-* Part of Arduino Event System.
-*
-* Author: mromani@ottotecnica.com
-* Copyright (c) 2010 OTTOTECNICA Italy
-*
-* This library is free software; you can redistribute it
-* and/or modify it under the terms of the GNU Lesser
-* General Public License as published by the Free Software
-* Foundation; either version 2.1 of the License, or (at
-* your option) any later version.
-*
-* This library is distributed in the hope that it will
-* be useful, but WITHOUT ANY WARRANTY; without even the
-* implied warranty of MERCHANTABILITY or FITNESS FOR A
-* PARTICULAR PURPOSE.  See the GNU Lesser General Public
-* License for more details.
-*
-* You should have received a copy of the GNU Lesser
-* General Public License along with this library; if not,
-* write to the Free Software Foundation, Inc.,
-* 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*
-*/
+/**
+ * File: EventDispatcher.cpp
+ *
+ * About:
+ *     Part of Arduino Event System.
+ *
+ * Authors:
+ *     Marcello Romani     mromani@ottotecnica.com
+ *     Willy De la Court   wdlarduino@linux-lovers.be
+ *
+ * Version:
+ *     1.1
+ *
+ * Copyright:
+ *     (c) 2010 OTTOTECNICA Italy
+ *
+ * License:
+ *
+ * This library is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU Lesser
+ * General Public License as published by the Free Software
+ * Foundation; either version 2.1 of the License, or (at
+ * your option) any later version.
+ *
+ * This library is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser
+ * General Public License along with this library; if not,
+ * write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+ *
+ * Changelog:
+ *    1.1 2011-06-29 - Willy De la Court : Doc changes
+ *    1.0 2010-07-14 - Marcello Romani : Initial Version
+ *
+ */
 
 #include <EventDispatcher.h>
 
@@ -62,7 +76,7 @@ boolean EventDispatcher::addEventListener(int ev_code, EventListener f, Overwrit
 	enabled[numListeners] = true;
 	
 	numListeners++;
-	
+
 	return true;
 }
 

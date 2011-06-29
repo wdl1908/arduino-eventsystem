@@ -1,87 +1,163 @@
-/*
-* EventQueue.h
-*
-* Part of Arduino Event System.
-*
-* Author: mromani@ottotecnica.com
-* Copyright (c) 2010 OTTOTECNICA Italy
-*
-* This library is free software; you can redistribute it
-* and/or modify it under the terms of the GNU Lesser
-* General Public License as published by the Free Software
-* Foundation; either version 2.1 of the License, or (at
-* your option) any later version.
-*
-* This library is distributed in the hope that it will
-* be useful, but WITHOUT ANY WARRANTY; without even the
-* implied warranty of MERCHANTABILITY or FITNESS FOR A
-* PARTICULAR PURPOSE.  See the GNU Lesser General Public
-* License for more details.
-*
-* You should have received a copy of the GNU Lesser
-* General Public License along with this library; if not,
-* write to the Free Software Foundation, Inc.,
-* 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*
-*/
+/**
+ * File: EventQueue.h
+ *
+ * About:
+ *     Part of Arduino Event System.
+ *
+ * Authors:
+ *     Marcello Romani     mromani@ottotecnica.com
+ *     Willy De la Court   wdlarduino@linux-lovers.be
+ *
+ * Version:
+ *     1.1
+ *
+ * Copyright:
+ *     (c) 2010 OTTOTECNICA Italy
+ *
+ * License:
+ *
+ * This library is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU Lesser
+ * General Public License as published by the Free Software
+ * Foundation; either version 2.1 of the License, or (at
+ * your option) any later version.
+ *
+ * This library is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser
+ * General Public License along with this library; if not,
+ * write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+ *
+ * Changelog:
+ *    1.1 2011-06-29 - Willy De la Court : Doc changes and 2 new events
+ *    1.0 2010-07-14 - Marcello Romani : Initial Version
+ *
+ */
 
-#ifndef EventQueue_h
-#define EventQueue_h
+#ifndef EVENTQUEUE_H
+#define EVENTQUEUE_H
 
 #include <WProgram.h>
 #include <Events.h>
 
+/**
+ * Class: EventQueue
+ *     Stores the events to be processed.
+ *
+ */
 class EventQueue {
 	
 	public:
-		// Event queue size.
-		// The maximum number of events
-		// the queue can hold is EVQUEUE_SIZE - 1.
-		// Increasing this number will consume 2 * sizeof(int)
-		// bytes of RAM for each unit.
+		/**
+		 * Constants: EventQueue
+		 *     EVQUEUE_SIZE - Event queue size.
+		 *         The maximum number of events
+		 *         the queue can hold is EVQUEUE_SIZE - 1.
+		 *         Increasing this number will consume 2 * sizeof(int)
+		 *         bytes of RAM for each unit.
+		 */
 		static const int EVQUEUE_SIZE = 10;
 		
-		// Queue constructor
+		/**
+		 * Constructor: EventQueue
+		 *     Queue constructor
+		 */
 		EventQueue();
 		
-		// returns true if no events are in the queue
+		/**
+		 * Function: isEmpty
+		 *
+		 * Returns:
+		 *     Returns *true* if no events are in the queue.
+		 */
 		boolean isEmpty();
 		
-		// returns true if no more events can be inserted into the queue
+		/**
+		 * Function: isFull
+		 *
+		 * Returns:
+		 *     Returns *true* if no more events can be inserted into the queue.
+		 */
 		boolean isFull();
 		
-		// actual number of events in queue
+		/**
+		 * Function: getNumEvents
+		 *
+		 * Returns:
+		 *     Returns the actual number of events in queue.
+		 */
 		int getNumEvents();
 		
-		// tries to insert an event into the queue;
-		// returns true if successful, false if the
-		// queue if full and the event cannot be inserted
+		/**
+		 * Method: enqueueEvent
+		 *     Tries to insert an event into the queue.
+		 *
+		 * Parameters:
+		 *     ev_code  - <Events> code
+		 *     ev_param - Value associated with the Event
+		 *
+		 * Returns:
+		 *     Returns *true* if successful, *false* if the
+		 *     queue is full and the event cannot be inserted.
+		 */
 		boolean enqueueEvent(int ev_code, int ev_param);
 		
-		// tries to extract an event from the queue;
-		// returns true if successful, false if the
-		// queue is empty (the parameteres are not touched
-		// in this case)
+		/**
+		 * Method: dequeueEvent
+		 *     Tries to extract an event from the queue.
+		 *
+		 * Parameters:
+		 *     ev_code  - <Events> code
+		 *     ev_param - Value associated with the Event
+		 *
+		 * Returns:
+		 *     returns *true* if successful, *false* if the
+		 *     queue is empty (the parameters are not touched
+		 *     in this case)
+		 */
 		boolean dequeueEvent(int* ev_code, int* ev_param);
 		
 	private:
-		// each event is represented by an integer code
-		int eventQueue[EVQUEUE_SIZE];
-		
-		// each event has a single integer parameter
-		int eventParam[EVQUEUE_SIZE];
-		
-		// index of event queue head
-		int eventQueueHead;
-		
-		// index of event queue tail
-		int eventQueueTail;
-		
-		// actual number of events in queue
-		int numEvents;
-		
-		// initialize event queue - to be called only by constructor
+		/**
+		 * Method: init
+		 *     Initialize event queue - to be called only by constructor.
+		 */
 		void init();
+
+		/**
+		 * Property: eventQueue
+		 *     Each event is represented by an integer code.
+		 */
+		int eventQueue[EVQUEUE_SIZE];
+
+		/**
+		 * Property: eventParam
+		 *     Each event has a single integer parameter.
+		 */
+		int eventParam[EVQUEUE_SIZE];
+
+		/**
+		 * Property: eventQueueHead
+		 *     Index of event queue head.
+		 */
+		int eventQueueHead;
+
+		/**
+		 * Property: eventQueueTail
+		 *     Index of event queue tail.
+		 */
+		int eventQueueTail;
+
+		/**
+		 * Property: numEvents
+		 *     Actual number of events in queue.
+		 */
+		int numEvents;
 };
 
 #endif
