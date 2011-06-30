@@ -9,7 +9,7 @@
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
  * Version:
- *     1.1
+ *     1.2
  *
  * Copyright:
  *     (c) 2010 OTTOTECNICA Italy
@@ -34,6 +34,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.2 2011-06-30 - Willy De la Court : Code cleanup
  *    1.1 2011-06-29 - Willy De la Court : Doc changes
  *    1.0 2010-07-14 - Marcello Romani : Initial Version
  *
@@ -54,7 +55,7 @@
  *     ev_code  - <Events> code
  *     ev_param - Value associated with the Event
  */
-typedef void (*EventListener)(int ev_code, int ev_param);
+typedef void (*EventListener)(byte ev_code, int ev_param);
 
 /**
  * Class: EventDispatcher
@@ -68,7 +69,7 @@ class EventDispatcher {
 		*     Maximum number of event/callback entries
 		*     can be changed to save memory or allow more events to be dispatched.
 		*/
-		static const int MAX_LISTENERS = 20;
+		static const byte MAX_LISTENERS = 20;
 
 		/**
 		* Enumerations: OverwriteOption
@@ -97,7 +98,7 @@ class EventDispatcher {
 		 *     Returns *true* if the <EventListener> is successfully installed,
 		 *     *false* otherwise (e.g. the dispatch table is full)
 		 */
-		boolean addEventListener(int ev_code, EventListener f, OverwriteOption overwrite = ALWAYS_APPEND);
+		boolean addEventListener(byte ev_code, EventListener f, OverwriteOption overwrite = ALWAYS_APPEND);
 
 		/**
 		 * Method: removeEventListener
@@ -108,7 +109,7 @@ class EventDispatcher {
 		 *     ev_code   - <Events> code.
 		 *     f         - <EventListener> function to call when event is dequeued.
 		 */
-		boolean removeEventListener(int ev_code, EventListener f);
+		boolean removeEventListener(byte ev_code, EventListener f);
 
 		/**
 		 * Method: enableEventListener
@@ -123,7 +124,7 @@ class EventDispatcher {
 		 *     Returns *true* if the <EventListener> was successfully enabled or disabled,
 		 *     *false* if the <EventListener> was not found
 		*/
-		boolean enableEventListener(int ev_code, EventListener f, boolean enable);
+		boolean enableEventListener(byte ev_code, EventListener f, boolean enable);
 
 		/**
 		 * Function: isEventListenerEnabled
@@ -136,7 +137,7 @@ class EventDispatcher {
 		 * Returns:
 		 *     Returns *true* if the <EventListener> is enabled and *false* if it is disabled.
 		*/
-		boolean isEventListenerEnabled(int ev_code, EventListener f);
+		boolean isEventListenerEnabled(byte ev_code, EventListener f);
 
 		/**
 		 * Method: setDefaultListener
@@ -176,7 +177,7 @@ class EventDispatcher {
 		 * Returns:
 		 *     Returns the number of <EventListener> in the dispatch table.
 		 */
-		int getNumEntries() { return numListeners; }
+		byte getNumEntries() { return numListeners; }
 
 		/**
 		 * Function: getEventQueue
@@ -198,7 +199,7 @@ class EventDispatcher {
 		 * Property: numListeners
 		 *     Actual number of <EventListener> elements registered.
 		 */
-		int numListeners;
+		byte numListeners;
 
 		/**
 		 * Property: callback
@@ -210,7 +211,7 @@ class EventDispatcher {
 		 * Property: eventCode
 		 *     Each <EventListener> observes a specific <Events> type.
 		 */
-		int eventCode[MAX_LISTENERS];
+		byte eventCode[MAX_LISTENERS];
 
 		/**
 		 * Property: enabled
@@ -244,7 +245,7 @@ class EventDispatcher {
 		 *     Returns the array index of the specified <EventListener>
 		 *     or -1 if no such event/function couple is found.
 		*/
-		int _searchEventListener(int ev_code, EventListener f);
+		byte _searchEventListener(byte ev_code, EventListener f);
 
 		/**
 		 * Method: _searchEventCode
@@ -257,7 +258,7 @@ class EventDispatcher {
 		 *     Returns the array index of the specified <EventListener>
 		 *     or -1 if no such event is found.
 		*/
-		int _searchEventCode(int ev_code);
+		byte _searchEventCode(byte ev_code);
 };
 
 #endif

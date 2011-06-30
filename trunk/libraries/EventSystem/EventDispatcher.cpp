@@ -9,7 +9,7 @@
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
  * Version:
- *     1.1
+ *     1.2
  *
  * Copyright:
  *     (c) 2010 OTTOTECNICA Italy
@@ -34,6 +34,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.2 2011-06-30 - Willy De la Court : Code cleanup
  *    1.1 2011-06-29 - Willy De la Court : Doc changes
  *    1.0 2010-07-14 - Marcello Romani : Initial Version
  *
@@ -47,8 +48,8 @@ EventDispatcher::EventDispatcher(EventQueue* evQueue) {
 	numListeners = 0;
 }
 
-boolean EventDispatcher::addEventListener(int ev_code, EventListener f, OverwriteOption overwrite) {
-	int k;
+boolean EventDispatcher::addEventListener(byte ev_code, EventListener f, OverwriteOption overwrite) {
+	byte k;
 	
 	// argument check
 	if (f == 0) {
@@ -81,9 +82,9 @@ boolean EventDispatcher::addEventListener(int ev_code, EventListener f, Overwrit
 }
 
 
-boolean EventDispatcher::removeEventListener(int ev_code, EventListener f) {
-	int i;
-	int k;
+boolean EventDispatcher::removeEventListener(byte ev_code, EventListener f) {
+	byte i;
+	byte k;
 
 	if (numListeners == 0) {
 		return false;
@@ -106,8 +107,8 @@ boolean EventDispatcher::removeEventListener(int ev_code, EventListener f) {
 }
 
 
-boolean EventDispatcher::enableEventListener(int ev_code, EventListener f, boolean enable) {
-	int k;
+boolean EventDispatcher::enableEventListener(byte ev_code, EventListener f, boolean enable) {
+	byte k;
 	
 	if (numListeners == 0) {
 		return false;
@@ -124,8 +125,8 @@ boolean EventDispatcher::enableEventListener(int ev_code, EventListener f, boole
 }
 
 
-boolean EventDispatcher::isEventListenerEnabled(int ev_code, EventListener f) {
-	int k;
+boolean EventDispatcher::isEventListenerEnabled(byte ev_code, EventListener f) {
+	byte k;
 
 	if (numListeners == 0) {
 		return false;
@@ -141,9 +142,9 @@ boolean EventDispatcher::isEventListenerEnabled(int ev_code, EventListener f) {
 
 
 void EventDispatcher::run() {
-	int event;
+	byte event;
 	int param;
-	int i;
+	byte i;
 	boolean handlerFound;
 
 	handlerFound = false;
@@ -190,8 +191,8 @@ void EventDispatcher::enableDefaultListener(boolean enable) {
 }
 
 
-int EventDispatcher::_searchEventListener(int ev_code, EventListener f) {
-	int i;
+byte EventDispatcher::_searchEventListener(byte ev_code, EventListener f) {
+	byte i;
 
 	for (i = 0; i < numListeners; i++) {
 		if ((eventCode[i] == ev_code) && (callback[i] == f)) {
@@ -203,8 +204,8 @@ int EventDispatcher::_searchEventListener(int ev_code, EventListener f) {
 }
 
 
-int EventDispatcher::_searchEventCode(int ev_code) {
-	int i;
+byte EventDispatcher::_searchEventCode(byte ev_code) {
+	byte i;
 
 	for (i = 0; i < numListeners; i++) {
 		if (eventCode[i] == ev_code) {

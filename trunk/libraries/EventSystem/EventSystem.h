@@ -37,14 +37,11 @@
  *
  */
 
-#ifndef EVENTSYSTEM_h
-#define EVENTSYSTEM_h
-
-#include <Events.h>
 #include <EventQueue.h>
 #include <EventDispatcher.h>
-#include <EventButton.h>
-#include <EventButtonManager.h>
+
+#ifndef EVENTSYSTEM_h
+#define EVENTSYSTEM_h
 
 /**
  * Variable: systemEventQueue

@@ -8,7 +8,7 @@
  *     Willy De la Court
  *
  * Version:
- *     1.0
+ *     1.1
  *
  * Copyright:
  *     (c) 2011 Willy De la Court, Belgium
@@ -33,6 +33,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.1 2011-06-30 - Willy De la Court : Code cleanup
  *    1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
@@ -61,7 +62,7 @@ boolean EventButtonManager::addEventButton(EventButton *button) {
 }
 
 void EventButtonManager::run() {
-	int i;
+	byte i;
 	
 	for (i = 0; i < numButtons; i++) {
 		buttons[i]->Check();

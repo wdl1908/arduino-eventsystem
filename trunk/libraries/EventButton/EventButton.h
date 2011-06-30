@@ -1,5 +1,5 @@
 /**
- * File: EventButtons.h
+ * File: EventButton.h
  *
  * About:
  *     Part of Arduino Event System.
@@ -8,7 +8,7 @@
  *     Willy De la Court
  *
  * Version:
- *     1.0
+ *     1.1
  *
  * Copyright:
  *     (c) 2011 Willy De la Court, Belgium
@@ -33,14 +33,16 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.1 2011-06-30 - Willy De la Court : Code cleanup
  *    1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
 
+#include <EventSystem.h>
+#include <EventButtonManager.h>
+
 #ifndef EVENTBUTTON_H
 #define EVENTBUTTON_H
-
-#include "WProgram.h"
 
 /**
  * Class: EventButton
@@ -58,7 +60,7 @@ class EventButton {
 		 *     HoldTime   - The time to wait until the button is considered in the hold state.
 		 *     RepeatTime - The time between repeats.
 		 */
-		EventButton(byte buttonPin, int HoldTime = 0, int RepeatTime = 0);
+		EventButton(byte buttonPin, unsigned int HoldTime = 0, unsigned int RepeatTime = 0);
 		
 		/**
 		 * Method: Check
@@ -71,7 +73,7 @@ class EventButton {
 		 * Property: pin
 		 *     Pin number of the arduino board.
 		 */
-		uint8_t pin;
+		byte pin;
 
 		/**
 		 * Property: stateCurrent
@@ -95,13 +97,13 @@ class EventButton {
 		 * Property: holdTime
 		 *     Time to wait before going into repeat mode.
 		 */
-		uint16_t holdTime;
+		unsigned int holdTime;
 
 		/**
 		 * Property: repeatTime
 		 *     Time to wait between repeats.
 		 */
-		uint16_t repeatTime;
+		unsigned int repeatTime;
 
 		/**
 		 * Property: changeTime

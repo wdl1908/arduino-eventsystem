@@ -8,7 +8,7 @@
  *     Willy De la Court
  *
  * Version:
- *     1.0
+ *     1.1
  *
  * Copyright:
  *     (c) 2011 Willy De la Court, Belgium
@@ -33,6 +33,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.1 2011-06-30 - Willy De la Court : Code cleanup
  *    1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
@@ -50,7 +51,7 @@ class EventButtonManager {
 		*     Maximum number of <EventButton> entries
 		*     can be changed to save memory or allow more buttons to be registered.
 		*/
-		static const int MAX_BUTTONS = 20;
+		static const byte MAX_BUTTONS = 20;
 
 		/**
 		 * Constructor: EventButtonManager
@@ -81,16 +82,20 @@ class EventButtonManager {
 		 * Property: numButtons
 		 *     Actual number of <EventButton> elements registered.
 		 */
-		int numButtons;
+		byte numButtons;
 
 		/**
-		 * Property: callback
+		 * Property: buttons
 		 *     Pointers to <EventButton> elements.
 		 */
 		EventButton *buttons[MAX_BUTTONS];
 
 };
 
+/**
+ * Variable: eventButtonManager
+ *     The system <EventButtonManager>
+ */
 extern EventButtonManager eventButtonManager;
 
 #endif
