@@ -1,5 +1,5 @@
 /**
- * File: EventButtonManager.cpp
+ * File: EventElement.h
  *
  * About:
  *     Part of Arduino Event System.
@@ -8,7 +8,7 @@
  *     Willy De la Court
  *
  * Version:
- *     1.1
+ *     1.0
  *
  * Copyright:
  *     (c) 2011 Willy De la Court, Belgium
@@ -33,40 +33,31 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
- *    1.1 2011-06-30 - Willy De la Court : Code cleanup
- *    1.0 2011-06-29 - Willy De la Court : Initial Version
+ *    1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
 
-#include <EventButtonManager.h>
+#ifndef EVENTELEMENT_H
+#define EVENTELEMENT_H
 
-EventButtonManager::EventButtonManager() {
-	numButtons = 0;
-}
+/**
+ * Class: EventElement
+ *     Base class for all elements that generates <Events>.
+ *
+ */
+class EventElement {
+	public:
+		/**
+		 * Constructor: EventElement
+		 *     Create an <EventElement> object.
+		 */
+		EventElement();
+		
+		/**
+		 * Method: Check
+		 *     Check the element and generate events.
+		 */
+		virtual void Check();
+};
 
-boolean EventButtonManager::addEventButton(EventButton *button) {
-
-	// argument check
-	if (button == 0) {
-		return false;
-	}
-
-	// buttons table is full
-	if (numButtons == MAX_BUTTONS) {
-		return false;
-	}
-	
-	buttons[numButtons] = button;
-	numButtons++;
-	return true;
-}
-
-void EventButtonManager::run() {
-	byte i;
-	
-	for (i = 0; i < numButtons; i++) {
-		buttons[i]->Check();
-	}
-}
-
-EventButtonManager eventButtonManager;
+#endif

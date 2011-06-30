@@ -1,5 +1,5 @@
 /**
- * File: EventSystem.cpp
+ * File: EventManager.cpp
  *
  * About:
  *     Part of Arduino Event System.
@@ -33,26 +33,37 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
- *    1.0 2011-06-29 - Willy De la Court : Initial Version
+ *    1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
 
-#include <EventSystem.h>
+#include <EventManager.h>
 
-/**
- * Variable: systemEventQueue
- *     The system <EventQueue>
- */
-EventQueue systemEventQueue;
+EventManager::EventManager() {
+	numElements = 0;
+}
 
-/**
- * Variable: systemEventDispatcher
- *     The system <EventDispatcher>
- */
-EventDispatcher systemEventDispatcher(&systemEventQueue);
+boolean EventManager::addEventElement(EventElement *element) {
 
-/**
- * Variable: systemEventManager
- *     The system <EventManager>
- */
-EventManager systemEventManager;
+	// argument check
+	if (element == 0) {
+		return false;
+	}
+
+	// element table is full
+	if (numElements == MAX_ELEMENTS) {
+		return false;
+	}
+	
+	elements[numElements] = element;
+	numElements++;
+	return true;
+}
+
+void EventManager::run() {
+	byte i;
+	
+	for (i = 0; i < numElements; i++) {
+		elements[i]->Check();
+	}
+}
