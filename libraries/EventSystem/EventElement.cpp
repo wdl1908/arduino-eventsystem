@@ -1,5 +1,5 @@
 /**
- * File: EventSystem.cpp
+ * File: EventElement.cpp
  *
  * About:
  *     Part of Arduino Event System.
@@ -33,26 +33,16 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
- *    1.0 2011-06-29 - Willy De la Court : Initial Version
+ *    1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
 
 #include <EventSystem.h>
+#include <EventElement.h>
 
-/**
- * Variable: systemEventQueue
- *     The system <EventQueue>
- */
-EventQueue systemEventQueue;
+EventElement::EventElement() {
+	systemEventManager.addEventElement(this);
+}
 
-/**
- * Variable: systemEventDispatcher
- *     The system <EventDispatcher>
- */
-EventDispatcher systemEventDispatcher(&systemEventQueue);
-
-/**
- * Variable: systemEventManager
- *     The system <EventManager>
- */
-EventManager systemEventManager;
+void EventElement::Check(void) {
+}

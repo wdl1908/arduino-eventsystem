@@ -8,7 +8,7 @@
  *     Willy De la Court
  *
  * Version:
- *     1.1
+ *     1.2
  *
  * Copyright:
  *     (c) 2011 Willy De la Court, Belgium
@@ -33,23 +33,36 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.2 2011-06-30 - Willy De la Court : Added EventElement inheritance
  *    1.1 2011-06-30 - Willy De la Court : Code cleanup
  *    1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
 
 #include <EventSystem.h>
-#include <EventButtonManager.h>
+#include <EventElement.h>
 
 #ifndef EVENTBUTTON_H
 #define EVENTBUTTON_H
+
+/**
+ * Constant: HOLD_TIME
+ *     Time a button needs to be pressed before going into repeat mode.
+ */
+#define HOLD_TIME   1000
+
+/**
+ * Constant: REPEAT_TIME
+ *     Time between repeat.
+ */
+#define REPEAT_TIME 400
 
 /**
  * Class: EventButton
  *     Generates press/release events.
  *
  */
-class EventButton {
+class EventButton : public EventElement {
 	public:
 		/**
 		 * Constructor: EventButton
@@ -66,7 +79,7 @@ class EventButton {
 		 * Method: Check
 		 *     Check the button and generate events when the button state changes.
 		 */
-		void Check();
+		virtual void Check();
 
 	private:
 		/**

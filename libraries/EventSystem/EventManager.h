@@ -1,5 +1,5 @@
 /**
- * File: EventButtonManager.h
+ * File: EventManager.h
  *
  * About:
  *     Part of Arduino Event System.
@@ -8,7 +8,7 @@
  *     Willy De la Court
  *
  * Version:
- *     1.1
+ *     1.0
  *
  * Copyright:
  *     (c) 2011 Willy De la Court, Belgium
@@ -33,44 +33,43 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
- *    1.1 2011-06-30 - Willy De la Court : Code cleanup
- *    1.0 2011-06-29 - Willy De la Court : Initial Version
+ *    1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
 
-#ifndef EVENTBUTTONMANAGER_H
-#define EVENTBUTTONMANAGER_H
-
 #include "WProgram.h"
-#include <EventButton.h>
+#include <EventElement.h>
 
-class EventButtonManager {
+#ifndef EVENTMANAGER_H
+#define EVENTMANAGER_H
+
+class EventManager {
 	public:
 		/**
-		* Constant: MAX_BUTTONS
-		*     Maximum number of <EventButton> entries
-		*     can be changed to save memory or allow more buttons to be registered.
+		* Constant: MAX_ELEMENTS
+		*     Maximum number of <EventElement> entries
+		*     can be changed to save memory or allow more elements to be registered.
 		*/
-		static const byte MAX_BUTTONS = 20;
+		static const byte MAX_ELEMENTS = 20;
 
 		/**
-		 * Constructor: EventButtonManager
+		 * Constructor: EventManager
 		 *
 		 */
-		EventButtonManager();
+		EventManager();
 
 		/**
-		 * Method: addEventListener
-		 *     The function f will be called when event ev_code will be dequeued
+		 * Method: addEventElement
+		 *     Add an <EventElement> to the processing list.
 		 *
 		 * Parameters:
-		 *     button - <EventButton> pointer.
+		 *     element - <EventButton> pointer.
 		 *
 		 * Returns:
-		 *     Returns *true* if the <EventButton> is successfully installed,
-		 *     *false* otherwise (e.g. the buttons table is full)
+		 *     Returns *true* if the <EventElement> is successfully installed,
+		 *     *false* otherwise (e.g. the elements table is full)
 		 */
-		boolean addEventButton(EventButton *button);
+		boolean addEventElement(EventElement *element);
 
 		/**
 		 * Procedure: run
@@ -79,23 +78,16 @@ class EventButtonManager {
 		void run();
 	private:
 		/**
-		 * Property: numButtons
-		 *     Actual number of <EventButton> elements registered.
+		 * Property: numElements
+		 *     Actual number of <EventElement> elements registered.
 		 */
-		byte numButtons;
+		byte numElements;
 
 		/**
-		 * Property: buttons
+		 * Property: elements
 		 *     Pointers to <EventButton> elements.
 		 */
-		EventButton *buttons[MAX_BUTTONS];
-
+		EventElement *elements[MAX_ELEMENTS];
 };
-
-/**
- * Variable: eventButtonManager
- *     The system <EventButtonManager>
- */
-extern EventButtonManager eventButtonManager;
 
 #endif
