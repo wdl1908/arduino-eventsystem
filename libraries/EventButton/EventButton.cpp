@@ -1,5 +1,5 @@
 /**
- * File: EventButtons.cpp
+ * File: EventButton.cpp
  *
  * About:
  *     Part of Arduino Event System.
@@ -8,7 +8,7 @@
  *     Willy De la Court
  *
  * Version:
- *     1.0
+ *     1.1
  *
  * Copyright:
  *     (c) 2011 Willy De la Court, Belgium
@@ -33,13 +33,17 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.1 2011-06-30 - Willy De la Court : Code cleanup
  *    1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
 
+#include <EventButton.h>
+#include <EventButtonManager.h>
+#include <EventQueue.h>
 #include <EventSystem.h>
 
-EventButton::EventButton(byte buttonPin, int buttonHoldTime, int buttonRepeatTime) {
+EventButton::EventButton(byte buttonPin, unsigned int buttonHoldTime, unsigned int buttonRepeatTime) {
 
 	// Set button pin to input
 	pin = buttonPin;

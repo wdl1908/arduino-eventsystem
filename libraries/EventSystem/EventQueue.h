@@ -9,7 +9,7 @@
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
  * Version:
- *     1.1
+ *     1.2
  *
  * Copyright:
  *     (c) 2010 OTTOTECNICA Italy
@@ -34,16 +34,17 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.2 2011-06-30 - Willy De la Court : Code cleanup
  *    1.1 2011-06-29 - Willy De la Court : Doc changes and 2 new events
  *    1.0 2010-07-14 - Marcello Romani : Initial Version
  *
  */
 
-#ifndef EVENTQUEUE_H
-#define EVENTQUEUE_H
-
 #include <WProgram.h>
 #include <Events.h>
+
+#ifndef EVENTQUEUE_H
+#define EVENTQUEUE_H
 
 /**
  * Class: EventQueue
@@ -61,7 +62,7 @@ class EventQueue {
 		 *         Increasing this number will consume 2 * sizeof(int)
 		 *         bytes of RAM for each unit.
 		 */
-		static const int EVQUEUE_SIZE = 10;
+		static const byte EVQUEUE_SIZE = 10;
 		
 		/**
 		 * Constructor: EventQueue
@@ -91,7 +92,7 @@ class EventQueue {
 		 * Returns:
 		 *     Returns the actual number of events in queue.
 		 */
-		int getNumEvents();
+		byte getNumEvents();
 		
 		/**
 		 * Method: enqueueEvent
@@ -105,7 +106,7 @@ class EventQueue {
 		 *     Returns *true* if successful, *false* if the
 		 *     queue is full and the event cannot be inserted.
 		 */
-		boolean enqueueEvent(int ev_code, int ev_param);
+		boolean enqueueEvent(byte ev_code, int ev_param);
 		
 		/**
 		 * Method: dequeueEvent
@@ -120,20 +121,14 @@ class EventQueue {
 		 *     queue is empty (the parameters are not touched
 		 *     in this case)
 		 */
-		boolean dequeueEvent(int* ev_code, int* ev_param);
+		boolean dequeueEvent(byte* ev_code, int* ev_param);
 		
 	private:
-		/**
-		 * Method: init
-		 *     Initialize event queue - to be called only by constructor.
-		 */
-		void init();
-
 		/**
 		 * Property: eventQueue
 		 *     Each event is represented by an integer code.
 		 */
-		int eventQueue[EVQUEUE_SIZE];
+		byte eventQueue[EVQUEUE_SIZE];
 
 		/**
 		 * Property: eventParam
@@ -145,19 +140,19 @@ class EventQueue {
 		 * Property: eventQueueHead
 		 *     Index of event queue head.
 		 */
-		int eventQueueHead;
+		byte eventQueueHead;
 
 		/**
 		 * Property: eventQueueTail
 		 *     Index of event queue tail.
 		 */
-		int eventQueueTail;
+		byte eventQueueTail;
 
 		/**
 		 * Property: numEvents
 		 *     Actual number of events in queue.
 		 */
-		int numEvents;
+		byte numEvents;
 };
 
 #endif

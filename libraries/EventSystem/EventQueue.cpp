@@ -9,7 +9,7 @@
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
  * Version:
- *     1.1
+ *     1.2
  *
  * Copyright:
  *     (c) 2010 OTTOTECNICA Italy
@@ -34,6 +34,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * Changelog:
+ *    1.2 2011-06-30 - Willy De la Court : Code cleanup
  *    1.1 2011-06-29 - Willy De la Court : Doc changes
  *    1.0 2010-07-14 - Marcello Romani : Initial Version
  *
@@ -42,21 +43,9 @@
 #include <EventQueue.h>
 
 EventQueue::EventQueue() {
-	init();
-}
-
-
-void EventQueue::init() {
-	int i;
-	
 	eventQueueHead = 0;
 	eventQueueTail = EVQUEUE_SIZE - 1;
 	numEvents = 0;
-	
-	for (i = 0; i < EVQUEUE_SIZE; i++) {
-		eventQueue[i] = Events::EV_NONE;
-		eventParam[i] = 0;
-	}
 }
 
 
@@ -70,17 +59,17 @@ boolean EventQueue::isFull() {
 }
 
 
-int EventQueue::getNumEvents() {
+byte EventQueue::getNumEvents() {
 	return numEvents;
 }
 
 
-boolean EventQueue::enqueueEvent(int ev_code, int ev_param) {
+boolean EventQueue::enqueueEvent(byte ev_code, int ev_param) {
 
 	if (isFull()) {
 		// log the queue full error
-		Serial.print(millis());
-		Serial.println(" QUEUE FULL");
+		// Serial.print(millis());
+		// Serial.println(" QUEUE FULL");
 		return false;
 	}
 	
@@ -98,10 +87,8 @@ boolean EventQueue::enqueueEvent(int ev_code, int ev_param) {
 }
 
 
-boolean EventQueue::dequeueEvent(int* ev_code, int* ev_param) {
-	int temp;
-	boolean isEmpty;
-	
+boolean EventQueue::dequeueEvent(byte* ev_code, int* ev_param) {
+
 	if (numEvents == 0) {
 		return false;
 	}
