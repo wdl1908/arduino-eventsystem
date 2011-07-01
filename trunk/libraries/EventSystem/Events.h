@@ -49,6 +49,9 @@
 class Events {
 	
 	public:
+		/**
+		 * eventType Enum
+		 */
 		enum eventType {
 			EV_NONE = 200,       ///< no event occurred     - param: none
 			EV_KEY_PRESS,        ///< a key was pressed     - param: key code

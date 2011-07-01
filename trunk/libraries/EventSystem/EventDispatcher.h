@@ -43,6 +43,7 @@
 #include <WProgram.h>
 #include <Events.h>
 #include <EventQueue.h>
+#include <EventElement.h>
 
 /**
  * EventListener function prototype.
@@ -58,8 +59,14 @@ typedef void (*EventListener)(byte ev_code, int ev_param);
 class EventDispatcher {
 
 	public:
-		static const byte MAX_LISTENERS = 20; ///< Maximum number of event/callback entries
+		static const byte MAX_LISTENERS = 20; ///< Maximum number of Events/EventListener entries
 		                                      ///< can be changed to save memory or allow more events to be dispatched.
+		static const byte MAX_ELEMENTS = 20;  ///< Maximum number of EventElement entries
+		                                      ///< can be changed to save memory or allow more elements to be registered.
+
+		/**
+		 * Enum for addEventListener
+		 */
 		enum OverwriteOption {
 			ALWAYS_APPEND,     ///< Just add ev_code/f to the list.
 			OVERWRITE_EVENT    ///< If a EventListener with the same Events is found, 
@@ -70,6 +77,16 @@ class EventDispatcher {
 		 * A dispatcher is used to process events of a particular queue.
 		 */
 		EventDispatcher(EventQueue* evQueue);
+
+		/**
+		 * Add an EventElement to the processing list.
+		 *
+		 * @param element EventButton pointer.
+		 *
+		 * @return Returns @b true if the EventElement is successfully installed,
+		 *         @b false otherwise (e.g. the elements table is full)
+		 */
+		boolean addEventElement(EventElement *element);
 
 		/**
 		 * The function f will be called when event ev_code will be dequeued
@@ -160,6 +177,8 @@ class EventDispatcher {
 		boolean enabled[MAX_LISTENERS];        ///< Each EventListener can be enabled or disabled.
 		EventListener defaultCallback;         ///< Callback function to be called for event types which have no EventListener.
 		boolean defaultCallbackEnabled;        ///< once set, the default callback function can be enabled or disabled.
+		byte numElements;                      ///< Actual number of EventElement elements registered.
+		EventElement *elements[MAX_ELEMENTS];  ///< Pointers to EventElement elements.
 
 		/**
 		 * Search for a specific Events and EventListener

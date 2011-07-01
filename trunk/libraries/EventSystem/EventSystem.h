@@ -35,7 +35,6 @@
 
 #include <EventQueue.h>
 #include <EventDispatcher.h>
-#include <EventManager.h>
 
 #ifndef EVENTSYSTEM_h
 #define EVENTSYSTEM_h
@@ -49,10 +48,5 @@ extern EventQueue systemEventQueue;
  * The system EventDispatcher
  */
 extern EventDispatcher systemEventDispatcher;
-
-/**
- * The system EventManager
- */
-extern EventManager systemEventManager;
 
 #endif

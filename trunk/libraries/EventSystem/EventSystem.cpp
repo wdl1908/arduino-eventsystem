@@ -38,5 +38,3 @@
 EventQueue systemEventQueue;
 
 EventDispatcher systemEventDispatcher(&systemEventQueue);
-
-EventManager systemEventManager;

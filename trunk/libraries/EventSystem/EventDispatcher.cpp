@@ -43,6 +43,24 @@ EventDispatcher::EventDispatcher(EventQueue* evQueue) {
 
 	q = evQueue;
 	numListeners = 0;
+	numElements = 0;
+}
+
+boolean EventDispatcher::addEventElement(EventElement *element) {
+
+	// argument check
+	if (element == 0) {
+		return false;
+	}
+
+	// element table is full
+	if (numElements == MAX_ELEMENTS) {
+		return false;
+	}
+	
+	elements[numElements] = element;
+	numElements++;
+	return true;
 }
 
 boolean EventDispatcher::addEventListener(byte ev_code, EventListener f, OverwriteOption overwrite) {
@@ -144,6 +162,12 @@ void EventDispatcher::run() {
 	byte i;
 	boolean handlerFound;
 
+	// Start checing all the registered EventElement entries.
+	for (i = 0; i < numElements; i++) {
+		elements[i]->Check();
+	}
+
+	// Process all the added Events and dispatches them to the registered EventListener.
 	handlerFound = false;
 
 	if (q->dequeueEvent(&event, &param)) {
