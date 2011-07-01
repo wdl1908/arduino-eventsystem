@@ -162,7 +162,7 @@ void EventDispatcher::run() {
 	byte i;
 	boolean handlerFound;
 
-	// Start checing all the registered EventElement entries.
+	// Start checking all the registered EventElement entries.
 	for (i = 0; i < numElements; i++) {
 		elements[i]->Check();
 	}

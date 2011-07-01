@@ -29,6 +29,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @changelog
+ *    - 1.1 2011-07-01 - Willy De la Court : Merged with EventManager
  *    - 1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
