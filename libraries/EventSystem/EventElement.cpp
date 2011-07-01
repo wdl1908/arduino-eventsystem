@@ -37,7 +37,7 @@
 #include <EventElement.h>
 
 EventElement::EventElement() {
-	systemEventManager.addEventElement(this);
+	systemEventDispatcher.addEventElement(this);
 }
 
 void EventElement::Check(void) {
