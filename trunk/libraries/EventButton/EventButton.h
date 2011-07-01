@@ -49,12 +49,14 @@
  */
 class EventButton : public EventElement {
 	public:
-		/// Create an button object.
-		EventButton(
-				byte buttonPin,              ///< The pin number of the digital pin the button is connected to.
-				unsigned int HoldTime = 0,   ///< The time to wait until the button is considered in the hold state.
-				unsigned int RepeatTime = 0  ///< The time between repeats. */
-		);
+		/**
+		 * Create an EventButton object.
+		 *
+		 * @param buttonPin  The pin number of the digital pin the button is connected to.
+		 * @param HoldTime   The time to wait until the button is considered in the hold state.
+		 * @param RepeatTime The time between repeats.
+		 */
+		EventButton(byte buttonPin, unsigned int HoldTime = 0, unsigned int RepeatTime = 0);
 		
 		/**
 		 * Check the button and generate events when the button state changes.
