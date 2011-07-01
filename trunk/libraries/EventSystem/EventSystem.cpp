@@ -1,9 +1,9 @@
 /**
- * @file: EventSystem.cpp
+ * @file EventSystem.cpp
  *
  * @about Part of Arduino Event System.
  *
- * @authorWilly De la Court
+ * @author Willy De la Court
  *
  * @version 1.0
  *

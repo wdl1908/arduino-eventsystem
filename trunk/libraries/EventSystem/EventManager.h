@@ -1,19 +1,15 @@
 /**
- * File: EventManager.h
+ * @file EventManager.cpp
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Author:
- *     Willy De la Court
+ * @author Willy De la Court
  *
- * Version:
- *     1.0
+ * @version 1.0
  *
- * Copyright:
- *     (c) 2011 Willy De la Court, Belgium
+ * @copyright (c) 2011 Willy De la Court, Belgium
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -32,8 +28,8 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.0 2011-06-30 - Willy De la Court : Initial Version
+ * @changelog
+ *    - 1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
 
@@ -44,55 +40,40 @@
 #define EVENTMANAGER_H
 
 /**
- * Class: EventManager
- *     Stores the elements to be processed.
- *
+ * Stores the elements to be processed.
  */
 class EventManager {
 	public:
 		/**
 		* Constant: MAX_ELEMENTS
-		*     Maximum number of <EventElement> entries
+		*     Maximum number of EventElement entries
 		*     can be changed to save memory or allow more elements to be registered.
 		*/
-		static const byte MAX_ELEMENTS = 20;
+		static const byte MAX_ELEMENTS = 20; ///< Maximum number of EventElement entries
+		                                     ///< can be changed to save memory or allow more elements to be registered.
 
 		/**
-		 * Constructor: EventManager
-		 *
+		 * Constructor
 		 */
 		EventManager();
 
 		/**
-		 * Method: addEventElement
-		 *     Add an <EventElement> to the processing list.
+		 * Add an EventElement to the processing list.
 		 *
-		 * Parameters:
-		 *     element - <EventButton> pointer.
+		 * @param element EventButton pointer.
 		 *
-		 * Returns:
-		 *     Returns *true* if the <EventElement> is successfully installed,
-		 *     *false* otherwise (e.g. the elements table is full)
+		 * @return Returns @b true if the EventElement is successfully installed,
+		 *         @b false otherwise (e.g. the elements table is full)
 		 */
 		boolean addEventElement(EventElement *element);
 
 		/**
-		 * Procedure: run
-		 *     This must be continuously called (in loop()).
+		 * This must be continuously called (in loop()).
 		 */
 		void run();
 	private:
-		/**
-		 * Property: numElements
-		 *     Actual number of <EventElement> elements registered.
-		 */
-		byte numElements;
-
-		/**
-		 * Property: elements
-		 *     Pointers to <EventElement> elements.
-		 */
-		EventElement *elements[MAX_ELEMENTS];
+		byte numElements;                     ///< Actual number of EventElement elements registered.
+		EventElement *elements[MAX_ELEMENTS]; ///< Pointers to EventElement elements.
 };
 
 #endif
