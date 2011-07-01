@@ -37,7 +37,7 @@
 #define EVENTELEMENT_H
 
 /**
- * Base class for all elements that generates <Events>.
+ * Base class for all elements that generates Events.
  */
 class EventElement {
 	public:

@@ -58,7 +58,7 @@ class Events {
 			EV_CHAR,             ///< a character was received - param: the character to be notified
 			EV_TIME,             ///< generic time event    - param: a time value
 			                     ///< (exact meaning is defined by the code
-								 ///< inserting this event into the queue)
+			                     ///< inserting this event into the queue)
 			EV_TIMER0,           ///< generic timer events  - param: same as EV_TIME
 			EV_TIMER1,           ///< generic timer events  - param: same as EV_TIME
 			EV_TIMER2,           ///< generic timer events  - param: same as EV_TIME
