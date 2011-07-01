@@ -43,6 +43,11 @@
 #ifndef EVENTMANAGER_H
 #define EVENTMANAGER_H
 
+/**
+ * Class: EventManager
+ *     Stores the elements to be processed.
+ *
+ */
 class EventManager {
 	public:
 		/**
@@ -85,7 +90,7 @@ class EventManager {
 
 		/**
 		 * Property: elements
-		 *     Pointers to <EventButton> elements.
+		 *     Pointers to <EventElement> elements.
 		 */
 		EventElement *elements[MAX_ELEMENTS];
 };

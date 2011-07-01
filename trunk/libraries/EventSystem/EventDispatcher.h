@@ -1,20 +1,17 @@
 /**
- * File: EventDispatcher.h
+ * @file EventDispatcher.h
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Authors:
+ * @authors
  *     Marcello Romani     mromani@ottotecnica.com
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
- * Version:
- *     1.2
+ * @version 1.2
  *
- * Copyright:
- *     (c) 2010 OTTOTECNICA Italy
+ * @copyright (c) 2010 OTTOTECNICA Italy
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -33,10 +30,10 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.2 2011-06-30 - Willy De la Court : Code cleanup
- *    1.1 2011-06-29 - Willy De la Court : Doc changes
- *    1.0 2010-07-14 - Marcello Romani : Initial Version
+ * @changelog
+ *    - 1.2 2011-06-30 - Willy De la Court : Code cleanup
+ *    - 1.1 2011-06-29 - Willy De la Court : Doc changes
+ *    - 1.0 2010-07-14 - Marcello Romani : Initial Version
  *
  */
 
@@ -48,81 +45,61 @@
 #include <EventQueue.h>
 
 /**
-* Function: EventListener
- *     <EventListener> function prototype.
+ * EventListener function prototype.
  *
- * Parameters:
- *     ev_code  - <Events> code
- *     ev_param - Value associated with the Event
+ * @param ev_code  Events code
+ * @param ev_param Value associated with the Event
  */
 typedef void (*EventListener)(byte ev_code, int ev_param);
 
 /**
- * Class: EventDispatcher
- *
+ * EventDispatcher
  */
 class EventDispatcher {
 
 	public:
-		/**
-		* Constant: MAX_LISTENERS
-		*     Maximum number of event/callback entries
-		*     can be changed to save memory or allow more events to be dispatched.
-		*/
-		static const byte MAX_LISTENERS = 20;
+		static const byte MAX_LISTENERS = 20; ///< Maximum number of event/callback entries
+		                                      ///< can be changed to save memory or allow more events to be dispatched.
+		enum OverwriteOption { 
+			ALWAYS_APPEND,     ///< Just add ev_code/f to the list.
+			OVERWRITE_EVENT    ///< If a EventListener with the same Events is found, 
+		                       ///< replace its function with f.
+		};
 
 		/**
-		* Enumerations: OverwriteOption
-		*     ALWAYS_APPEND   - Just add ev_code/f to the list.
-		*     OVERWRITE_EVENT - If a <EventListener> with the same <Events> is found, 
-		*                       replace its function with f.
-		*/
-		enum OverwriteOption { ALWAYS_APPEND, OVERWRITE_EVENT };
-
-		/**
-		 * Constructor: EventDispatcher
-		 *     A dispatcher is used to process events of a particular queue.
+		 * A dispatcher is used to process events of a particular queue.
 		 */
 		EventDispatcher(EventQueue* evQueue);
 
 		/**
-		 * Method: addEventListener
-		 *     The function f will be called when event ev_code will be dequeued
+		 * The function f will be called when event ev_code will be dequeued
 		 *
-		 * Parameters:
-		 *     ev_code   - <Events> code.
-		 *     f         - <EventListener> function to call when event is dequeued.
-		 *     overwrite - <OverwriteOption> Overwrite or append the <EventListener> default is append.
+		 * @param ev_code   Events code.
+		 * @param f         EventListener function to call when event is dequeued.
+		 * @param overwrite Overwrite or append the <ventListener default is append.
 		 *
-		 * Returns:
-		 *     Returns *true* if the <EventListener> is successfully installed,
-		 *     *false* otherwise (e.g. the dispatch table is full)
+		 * @return Returns @b true if the EventListener is successfully installed,
+		 *         @b false otherwise (e.g. the dispatch table is full)
 		 */
 		boolean addEventListener(byte ev_code, EventListener f, OverwriteOption overwrite = ALWAYS_APPEND);
 
 		/**
-		 * Method: removeEventListener
-		 *     Remove <EventListener> other listeners with the same function
-		 *     or ev_code will not be affected
+		 * Remove EventListener other listeners with the same function
+		 * or ev_code will not be affected
 		 *
-		 * Parameters:
-		 *     ev_code   - <Events> code.
-		 *     f         - <EventListener> function to call when event is dequeued.
+		 * @param ev_code   Events code.
+		 * @param f         EventListener function to call when event is dequeued.
 		 */
 		boolean removeEventListener(byte ev_code, EventListener f);
 
 		/**
-		 * Method: enableEventListener
-		 *     Enable or disable a <EventListener>
+		 * Enable or disable a EventListener
 		 *
-		 * Parameters:
-		 *     ev_code   - <Events> code.
-		 *     f         - <EventListener> function to call when event is dequeued.
-		 *     enable    - Enable or disable.
-		 *
-		 * Returns:
-		 *     Returns *true* if the <EventListener> was successfully enabled or disabled,
-		 *     *false* if the <EventListener> was not found
+		 * @param ev_code   Events code.
+		 * @param f         EventListener function to call when event is dequeued.
+		 * @param enable    Enable or disable.
+		 * @return Returns @b true if the <EventListener> was successfully enabled or disabled,
+		 *         @b false if the <EventListener> was not found
 		*/
 		boolean enableEventListener(byte ev_code, EventListener f, boolean enable);
 

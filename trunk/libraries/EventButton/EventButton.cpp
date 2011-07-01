@@ -1,19 +1,15 @@
-/**
- * File: EventButton.cpp
+ /**
+ * @file EventButton.cpp
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Author:
- *     Willy De la Court
+ * @author Willy De la Court
  *
- * Version:
- *     1.2
+ * @version 1.2
  *
- * Copyright:
- *     (c) 2011 Willy De la Court, Belgium
+ * @copyright (c) 2011 Willy De la Court, Belgium
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -32,10 +28,10 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.2 2011-06-30 - Willy De la Court : Added EventElement inheritance
- *    1.1 2011-06-30 - Willy De la Court : Code cleanup
- *    1.0 2011-06-29 - Willy De la Court : Initial Version
+ * @changelog
+ *    - 1.2 2011-06-30 - Willy De la Court : Added EventElement inheritance
+ *    - 1.1 2011-06-30 - Willy De la Court : Code cleanup
+ *    - 1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
 

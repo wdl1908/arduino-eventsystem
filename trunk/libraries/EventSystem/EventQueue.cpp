@@ -1,20 +1,17 @@
 /**
- * File: EventQueue.cpp
+ * @file EventQueue.cpp
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Authors:
+ * @authors
  *     Marcello Romani     mromani@ottotecnica.com
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
- * Version:
- *     1.2
+ * @version 1.2
  *
- * Copyright:
- *     (c) 2010 OTTOTECNICA Italy
+ * @copyright (c) 2010 OTTOTECNICA Italy
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -33,10 +30,10 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.2 2011-06-30 - Willy De la Court : Code cleanup
- *    1.1 2011-06-29 - Willy De la Court : Doc changes
- *    1.0 2010-07-14 - Marcello Romani : Initial Version
+ * @changelog
+ *    - 1.2 2011-06-30 - Willy De la Court : Code cleanup
+ *    - 1.1 2011-06-29 - Willy De la Court : Doc changes
+ *    - 1.0 2010-07-14 - Marcello Romani : Initial Version
  *
  */
 

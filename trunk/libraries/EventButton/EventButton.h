@@ -1,19 +1,15 @@
-/**
- * File: EventButton.h
+ /**
+ * @file EventButton.h
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Author:
- *     Willy De la Court
+ * @author Willy De la Court
  *
- * Version:
- *     1.2
+ * @version 1.2
  *
- * Copyright:
- *     (c) 2011 Willy De la Court, Belgium
+ * @copyright (c) 2011 Willy De la Court, Belgium
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -32,10 +28,10 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.2 2011-06-30 - Willy De la Court : Added EventElement inheritance
- *    1.1 2011-06-30 - Willy De la Court : Code cleanup
- *    1.0 2011-06-29 - Willy De la Court : Initial Version
+ * @changelog
+ *    - 1.2 2011-06-30 - Willy De la Court : Added EventElement inheritance
+ *    - 1.1 2011-06-30 - Willy De la Court : Code cleanup
+ *    - 1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
 
@@ -45,84 +41,34 @@
 #ifndef EVENTBUTTON_H
 #define EVENTBUTTON_H
 
-/**
- * Constant: HOLD_TIME
- *     Time a button needs to be pressed before going into repeat mode.
- */
-#define HOLD_TIME   1000
+#define HOLD_TIME   1000  ///< Time a button needs to be pressed before going into repeat mode.
+#define REPEAT_TIME 400   ///< Time between repeat.
 
 /**
- * Constant: REPEAT_TIME
- *     Time between repeat.
- */
-#define REPEAT_TIME 400
-
-/**
- * Class: EventButton
- *     Generates press/release events.
- *
+ * Generates press/release events.
  */
 class EventButton : public EventElement {
 	public:
-		/**
-		 * Constructor: EventButton
-		 *     Create an button object.
-		 *
-		 * Parameters:
-		 *     buttonPin  - The pin number of the digital pin the button is connected to.
-		 *     HoldTime   - The time to wait until the button is considered in the hold state.
-		 *     RepeatTime - The time between repeats.
-		 */
-		EventButton(byte buttonPin, unsigned int HoldTime = 0, unsigned int RepeatTime = 0);
+		/// Create an button object.
+		EventButton(
+				byte buttonPin,              ///< The pin number of the digital pin the button is connected to.
+				unsigned int HoldTime = 0,   ///< The time to wait until the button is considered in the hold state.
+				unsigned int RepeatTime = 0  ///< The time between repeats. */
+		);
 		
 		/**
-		 * Method: Check
-		 *     Check the button and generate events when the button state changes.
+		 * Check the button and generate events when the button state changes.
 		 */
-		virtual void Check();
+		virtual void Check(void);
 
 	private:
-		/**
-		 * Property: pin
-		 *     Pin number of the arduino board.
-		 */
-		byte pin;
-
-		/**
-		 * Property: stateCurrent
-		 *     Current state of the button.
-		 */
-		unsigned stateCurrent  : 1;
-
-		/**
-		 * Property: statePrevious
-		 *     Previous state of the button.
-		 */
-		unsigned statePrevious : 1;
-
-		/**
-		 * Property: stateRepeat
-		 *     Is the button repeating.
-		 */
-		unsigned stateRepeat   : 1;
-
-		/**
-		 * Property: holdTime
-		 *     Time to wait before going into repeat mode.
-		 */
-		unsigned int holdTime;
-
-		/**
-		 * Property: repeatTime
-		 *     Time to wait between repeats.
-		 */
-		unsigned int repeatTime;
-
-		/**
-		 * Property: changeTime
-		 *    Last time the button changed state.
-		 */
-		unsigned long changeTime;
+		byte pin;                   ///< Pin number of the arduino board.
+		unsigned stateCurrent  : 1; ///< Current state of the button.
+		unsigned statePrevious : 1; ///< Previous state of the button.
+		unsigned stateRepeat   : 1; ///< Is the button repeating.
+		unsigned int holdTime;      ///< Time to wait before going into repeat mode.
+		unsigned int repeatTime;    ///< Time to wait between repeats.
+		unsigned long changeTime;   ///< Last time the button changed state.
 };
 
 #endif
