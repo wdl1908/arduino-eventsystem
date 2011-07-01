@@ -1,20 +1,17 @@
 /**
- * File: EventQueue.h
+ * @file EventQueue.h
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Authors:
+ * @authors
  *     Marcello Romani     mromani@ottotecnica.com
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
- * Version:
- *     1.2
+ * @version 1.2
  *
- * Copyright:
- *     (c) 2010 OTTOTECNICA Italy
+ * @copyright (c) 2010 OTTOTECNICA Italy
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -33,10 +30,10 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.2 2011-06-30 - Willy De la Court : Code cleanup
- *    1.1 2011-06-29 - Willy De la Court : Doc changes and 2 new events
- *    1.0 2010-07-14 - Marcello Romani : Initial Version
+ * @changelog
+ *    - 1.2 2011-06-30 - Willy De la Court : Code cleanup
+ *    - 1.1 2011-06-29 - Willy De la Court : Doc changes and 2 new events
+ *    - 1.0 2010-07-14 - Marcello Romani : Initial Version
  *
  */
 
@@ -47,112 +44,71 @@
 #define EVENTQUEUE_H
 
 /**
- * Class: EventQueue
- *     Stores the events to be processed.
- *
+ * Stores the events to be processed.
  */
 class EventQueue {
 	
 	public:
 		/**
-		 * Constants: EventQueue
-		 *     EVQUEUE_SIZE - Event queue size.
-		 *         The maximum number of events
-		 *         the queue can hold is EVQUEUE_SIZE - 1.
-		 *         Increasing this number will consume 2 * sizeof(int)
-		 *         bytes of RAM for each unit.
+		 * The maximum number of events
+		 * the queue can hold is EVQUEUE_SIZE - 1.
+		 * Increasing this number will consume 2 * sizeof(int)
+		 * bytes of RAM for each unit.
 		 */
 		static const byte EVQUEUE_SIZE = 10;
 		
-		/**
-		 * Constructor: EventQueue
-		 *     Queue constructor
-		 */
+		///  Queue constructor
 		EventQueue();
 		
 		/**
-		 * Function: isEmpty
-		 *
-		 * Returns:
-		 *     Returns *true* if no events are in the queue.
+		 * @return
+		 *     Returns @b true if no events are in the queue.
 		 */
 		boolean isEmpty();
 		
 		/**
-		 * Function: isFull
-		 *
-		 * Returns:
-		 *     Returns *true* if no more events can be inserted into the queue.
+		 * @return
+		 *     Returns @b true if no more events can be inserted into the queue.
 		 */
 		boolean isFull();
 		
 		/**
-		 * Function: getNumEvents
-		 *
-		 * Returns:
+		 * @return
 		 *     Returns the actual number of events in queue.
 		 */
 		byte getNumEvents();
 		
 		/**
-		 * Method: enqueueEvent
-		 *     Tries to insert an event into the queue.
+		 * Tries to insert an event into the queue.
 		 *
-		 * Parameters:
-		 *     ev_code  - <Events> code
-		 *     ev_param - Value associated with the Event
+		 * @param ev_code  Events code
+		 * @param ev_param Value associated with the Event
 		 *
-		 * Returns:
-		 *     Returns *true* if successful, *false* if the
+		 * @return
+		 *     Returns @b true if successful, @b false if the
 		 *     queue is full and the event cannot be inserted.
 		 */
 		boolean enqueueEvent(byte ev_code, int ev_param);
 		
 		/**
-		 * Method: dequeueEvent
-		 *     Tries to extract an event from the queue.
+		 * Tries to extract an event from the queue.
 		 *
-		 * Parameters:
-		 *     ev_code  - <Events> code
-		 *     ev_param - Value associated with the Event
+		 * @param ev_code  Events code
+		 * @param ev_param Value associated with the Event
 		 *
-		 * Returns:
-		 *     returns *true* if successful, *false* if the
+		 * @return
+		 *     returns @b true if successful, @b false if the
 		 *     queue is empty (the parameters are not touched
 		 *     in this case)
 		 */
 		boolean dequeueEvent(byte* ev_code, int* ev_param);
 		
 	private:
-		/**
-		 * Property: eventQueue
-		 *     Each event is represented by an integer code.
-		 */
-		byte eventQueue[EVQUEUE_SIZE];
-
-		/**
-		 * Property: eventParam
-		 *     Each event has a single integer parameter.
-		 */
-		int eventParam[EVQUEUE_SIZE];
-
-		/**
-		 * Property: eventQueueHead
-		 *     Index of event queue head.
-		 */
-		byte eventQueueHead;
-
-		/**
-		 * Property: eventQueueTail
-		 *     Index of event queue tail.
-		 */
-		byte eventQueueTail;
-
-		/**
-		 * Property: numEvents
-		 *     Actual number of events in queue.
-		 */
-		byte numEvents;
+		byte eventQueue[EVQUEUE_SIZE]; ///< Each event is represented by an integer code.
+		int eventParam[EVQUEUE_SIZE];  ///< Each event has a single integer parameter.
+		byte eventQueueHead;           ///< Index of event queue head.
+		byte eventQueueTail;           ///< Index of event queue tail.
+		byte numEvents;                ///< Actual number of events in queue.
 };
 
 #endif

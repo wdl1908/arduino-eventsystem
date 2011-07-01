@@ -1,19 +1,15 @@
 /**
- * File: EventElement.h
+ * @file: EventElement.h
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Author:
- *     Willy De la Court
+ * @author Willy De la Court
  *
- * Version:
- *     1.0
+ * @version 1.0
  *
- * Copyright:
- *     (c) 2011 Willy De la Court, Belgium
+ * @copyright (c) 2011 Willy De la Court, Belgium
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -32,8 +28,8 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.0 2011-06-30 - Willy De la Court : Initial Version
+ * @changelog
+ *    - 1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
 
@@ -41,21 +37,17 @@
 #define EVENTELEMENT_H
 
 /**
- * Class: EventElement
- *     Base class for all elements that generates <Events>.
- *
+ * Base class for all elements that generates <Events>.
  */
 class EventElement {
 	public:
 		/**
-		 * Constructor: EventElement
-		 *     Create an <EventElement> object.
+		 * Create an EventElement object.
 		 */
 		EventElement();
 		
 		/**
-		 * Method: Check
-		 *     Check the element and generate events.
+		 * Check the element and generate events.
 		 */
 		virtual void Check();
 };

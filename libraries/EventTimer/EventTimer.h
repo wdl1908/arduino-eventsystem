@@ -1,19 +1,15 @@
 /**
- * File: EventTimer.h
+ * @file EventTimer.h
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Author:
- *     Willy De la Court
+ * @author Willy De la Court
  *
- * Version:
- *     1.0
+ * @version 1.0
  *
- * Copyright:
- *     (c) 2011 Willy De la Court, Belgium
+ * @copyright (c) 2011 Willy De la Court, Belgium
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -32,8 +28,8 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.0 2011-06-30 - Willy De la Court : Initial Version
+ * @changelog
+ *    - 1.0 2011-06-30 - Willy De la Court : Initial Version
  *
  */
 
@@ -44,46 +40,27 @@
 #define EVENTTIMER_H
 
 /**
- * Class: EventTimer
- *     Generates press/release events.
- *
+ * Generates timer Events.
  */
 class EventTimer : public EventElement {
 	public:
 		/**
-		 * Constructor: EventTimer
-		 *     Create an timer object.
+		 * Create an EventTimer object.
 		 *
-		 * Parameters:
-		 *     eventCode     - <Event> to add in the queue when interval expires.
-		 *     timerInterval - Timer interval.
+		 * @param eventCode      Events to add in the queue when interval expires.
+		 * @param timerInterval  Timer interval.
 		 */
 		EventTimer(byte eventCode, unsigned int timerInterval = 1000);
 		
 		/**
-		 * Method: Check
-		 *     Check the timer and generate an <Event> when the timer count expires.
+		 * Check the timer and generate an Event when the timer count expires.
 		 */
 		virtual void Check();
 
 	private:
-		/**
-		 * Property: event
-		 *     <Event> to add in the <EventQueue> when interval expires.
-		 */
-		byte event;
-
-		/**
-		 * Property: interval
-		 *     Timer interval.
-		 */
-		unsigned int interval;
-
-		/**
-		 * Property: lastTimerEvent
-		 *     The last time the timer has fired an <Event>.
-		 */
-		unsigned long lastTimerEvent;
+		byte event;                   ///< Events to add in the EventQueue when interval expires.
+		unsigned int interval;        ///< Timer interval.
+		unsigned long lastTimerEvent; ///< The last time the timer has fired an Events.
 };
 
 #endif

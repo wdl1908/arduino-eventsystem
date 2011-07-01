@@ -1,19 +1,15 @@
 /**
- * File: EventSystem.h
+ * @file: EventSystem.h
  *
- * About:
- *     Part of Arduino Event System.
+ * @about Part of Arduino Event System.
  *
- * Author:
- *     Willy De la Court
+ * @authorWilly De la Court
  *
- * Version:
- *     1.0
+ * @version 1.0
  *
- * Copyright:
- *     (c) 2011 Willy De la Court, Belgium
+ * @copyright (c) 2011 Willy De la Court, Belgium
  *
- * License:
+ * @license
  *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
@@ -32,8 +28,8 @@
  * write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * Changelog:
- *    1.0 2011-06-29 - Willy De la Court : Initial Version
+ * @changelog
+ *    - 1.0 2011-06-29 - Willy De la Court : Initial Version
  *
  */
 
@@ -45,20 +41,17 @@
 #define EVENTSYSTEM_h
 
 /**
- * Variable: systemEventQueue
- *     The system <EventQueue>
+ * The system EventQueue
  */
 extern EventQueue systemEventQueue;
 
 /**
-* Variable: systemEventDispatcher
-*     The system <EventDispatcher>
-*/
+ * The system EventDispatcher
+ */
 extern EventDispatcher systemEventDispatcher;
 
 /**
- * Variable: eventManager
- *     The system <EventManager>
+ * The system EventManager
  */
 extern EventManager systemEventManager;
 
