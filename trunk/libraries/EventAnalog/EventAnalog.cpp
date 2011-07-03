@@ -1,5 +1,5 @@
 /**
- * @file EventTimer.cpp
+ * @file EventAnalog.cpp
  *
  * @about Part of Arduino Event System.
  *
@@ -34,21 +34,31 @@
  */
 
 #include <EventSystem.h>
-#include <EventTimer.h>
+#include <EventAnalog.h>
 
-EventTimer::EventTimer(byte eventCode, unsigned int timerInterval):EventElement() {
+EventAnalog::EventAnalog(
+		byte analogPin, 
+		byte eventCode, 
+		int hysteresisValue
+	):EventElement() {
+
+	// Set the pin to input
+	pin = analogPin;
+	pinMode(pin, INPUT);
 
 	event = eventCode;
-	interval = timerInterval;
-	lastTimerEvent = millis();
+	hysteresis = hysteresisValue;
+	lastValue = -9999; // Force first event
 }
 
-void EventTimer::Check() {
-	unsigned long time;
+void EventAnalog::Check() {
+	int currentValue;
+
+	currentValue = analogRead(pin);
 	
-	time = millis();
-	if (lastTimerEvent + interval < time) {
-		lastTimerEvent = time;
-		systemEventQueue.enqueueEvent(event, (int) (lastTimerEvent / interval));
+	// Check if the currect value of the analog pin falls outside the range of the hysteresis.
+	if (currentValue < lastValue - hysteresis || currentValue > lastValue + hysteresis) {
+		lastValue = currentValue;
+		systemEventQueue.enqueueEvent(event, currentValue);
 	}
 }

@@ -52,22 +52,22 @@ class EventButton : public EventElement {
 		/**
 		 * Create an EventButton object.
 		 *
-		 * @param buttonPin  The pin number of the digital pin the button is connected to.
-		 * @param HoldTime   The time to wait until the button is considered in the hold state.
-		 * @param RepeatTime The time between repeats.
+		 * @param buttonPin        The pin number of the digital pin the button is connected to.
+		 * @param buttonHoldTime   The time to wait until the button is considered in the hold state.
+		 * @param buttonRepeatTime The time between repeats.
 		 */
-		EventButton(byte buttonPin, unsigned int HoldTime = 0, unsigned int RepeatTime = 0);
+		EventButton(byte buttonPin, unsigned int buttonHoldTime = 0, unsigned int buttonRepeatTime = 0);
 		
 		/**
 		 * Check the button and generate events when the button state changes.
 		 */
-		virtual void Check(void);
+		virtual void Check();
 
 	private:
 		byte pin;                   ///< Pin number of the arduino board.
-		unsigned stateCurrent  : 1; ///< Current state of the button.
-		unsigned statePrevious : 1; ///< Previous state of the button.
-		unsigned stateRepeat   : 1; ///< Is the button repeating.
+		boolean stateCurrent;       ///< Current state of the button.
+		boolean statePrevious;      ///< Previous state of the button.
+		boolean stateRepeat;        ///< Is the button repeating.
 		unsigned int holdTime;      ///< Time to wait before going into repeat mode.
 		unsigned int repeatTime;    ///< Time to wait between repeats.
 		unsigned long changeTime;   ///< Last time the button changed state.

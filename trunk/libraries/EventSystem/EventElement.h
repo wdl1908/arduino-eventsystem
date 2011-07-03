@@ -40,16 +40,24 @@
  * Base class for all elements that generates Events.
  */
 class EventElement {
+	friend class EventDispatcher;
+
 	public:
 		/**
 		 * Create an EventElement object.
 		 */
 		EventElement();
-		
+
 		/**
 		 * Check the element and generate events.
 		 */
 		virtual void Check();
+
+		virtual void HandleEvent(byte event, int param);
+
+		EventElement *getNext() { return next; }
+	protected:
+		EventElement *next;
 };
 
 #endif

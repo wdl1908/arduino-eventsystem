@@ -1,5 +1,5 @@
 /**
- * @file EventTimer.cpp
+ * @file EventAnalog.h
  *
  * @about Part of Arduino Event System.
  *
@@ -34,21 +34,35 @@
  */
 
 #include <EventSystem.h>
-#include <EventTimer.h>
+#include <EventElement.h>
 
-EventTimer::EventTimer(byte eventCode, unsigned int timerInterval):EventElement() {
+#ifndef EVENTANALOG_H
+#define EVENTANALOG_H
 
-	event = eventCode;
-	interval = timerInterval;
-	lastTimerEvent = millis();
-}
+/**
+ * Generates analog Events.
+ */
+class EventAnalog : public EventElement {
+	public:
+		/**
+		 * Create an EventAnalog object.
+		 *
+		 * @param analogPin       The pin number of the digital pin the button is connected to.
+		 * @param eventCode       Events to add in the queue when analog pin changes.
+		 * @param hysteresisValue The value of the analog pin needs to change with this value to generate an Events.
+		 */
+		EventAnalog(byte analogPin, byte eventCode, int hysteresisValue);
+		
+		/**
+		 * Check the analog pin and generate an Events when the value falls outside the hysteresis.
+		 */
+		virtual void Check();
 
-void EventTimer::Check() {
-	unsigned long time;
-	
-	time = millis();
-	if (lastTimerEvent + interval < time) {
-		lastTimerEvent = time;
-		systemEventQueue.enqueueEvent(event, (int) (lastTimerEvent / interval));
-	}
-}
+	private:
+		byte pin;       ///< Pin number of the arduino board.
+		byte event;     ///< Events to add in the EventQueue when analog pin changes.
+		int lastValue;  ///< Last value of the analog pin.
+		int hysteresis; ///< minimum change needed to generate an Events.
+};
+
+#endif

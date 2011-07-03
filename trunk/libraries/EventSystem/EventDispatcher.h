@@ -61,8 +61,6 @@ class EventDispatcher {
 	public:
 		static const byte MAX_LISTENERS = 20; ///< Maximum number of Events/EventListener entries
 		                                      ///< can be changed to save memory or allow more events to be dispatched.
-		static const byte MAX_ELEMENTS = 20;  ///< Maximum number of EventElement entries
-		                                      ///< can be changed to save memory or allow more elements to be registered.
 
 		/**
 		 * Enum for addEventListener
@@ -91,44 +89,44 @@ class EventDispatcher {
 		/**
 		 * The function f will be called when event ev_code will be dequeued
 		 *
-		 * @param ev_code   Events code.
+		 * @param event     Events code.
 		 * @param f         EventListener function to call when event is dequeued.
 		 * @param overwrite Overwrite or append the EventListener default is append.
 		 *
 		 * @return Returns @b true if the EventListener is successfully installed,
 		 *         @b false otherwise (e.g. the dispatch table is full)
 		 */
-		boolean addEventListener(byte ev_code, EventListener f, OverwriteOption overwrite = ALWAYS_APPEND);
+		boolean addEventListener(byte event, EventListener f, OverwriteOption overwrite = ALWAYS_APPEND);
 
 		/**
 		 * Remove EventListener other listeners with the same function
 		 * or ev_code will not be affected
 		 *
-		 * @param ev_code   Events code.
+		 * @param event     Events code.
 		 * @param f         EventListener function to call when event is dequeued.
 		 */
-		boolean removeEventListener(byte ev_code, EventListener f);
+		boolean removeEventListener(byte event, EventListener f);
 
 		/**
 		 * Enable or disable a EventListener
 		 *
-		 * @param ev_code   Events code.
+		 * @param event     Events code.
 		 * @param f         EventListener function to call when event is dequeued.
 		 * @param enable    Enable or disable.
 		 * @return Returns @b true if the EventListener was successfully enabled or disabled,
 		 *         @b false if the EventListener was not found
 		*/
-		boolean enableEventListener(byte ev_code, EventListener f, boolean enable);
+		boolean enableEventListener(byte event, EventListener f, boolean enable);
 
 		/**
 		 * Check if a EventListener is enabled.
 		 *
-		 * @param ev_code   Events code.
+		 * @param event     Events code.
 		 * @param f         EventListener function to call when event is dequeued.
 		 *
 		 * @return Returns @b true if the EventListener is enabled and @b false if it is disabled.
 		*/
-		boolean isEventListenerEnabled(byte ev_code, EventListener f);
+		boolean isEventListenerEnabled(byte event, EventListener f);
 
 		/**
 		 * The default EventListener is a callback function that is called when
@@ -169,6 +167,13 @@ class EventDispatcher {
 		 */
 		EventQueue* getEventQueue() { return q; }
 
+		/**
+		 * Get a head of the list of registered EventElement.
+		 *
+		 * @return Returns the head of the EventElement list.
+		 */
+		EventElement *getEventElementHead() { return head; }
+
 	private:
 		EventQueue* q;                         ///< EventQueue to be managed.
 		byte numListeners;                     ///<  Actual number of EventListener elements registered.
@@ -177,29 +182,29 @@ class EventDispatcher {
 		boolean enabled[MAX_LISTENERS];        ///< Each EventListener can be enabled or disabled.
 		EventListener defaultCallback;         ///< Callback function to be called for event types which have no EventListener.
 		boolean defaultCallbackEnabled;        ///< once set, the default callback function can be enabled or disabled.
-		byte numElements;                      ///< Actual number of EventElement elements registered.
-		EventElement *elements[MAX_ELEMENTS];  ///< Pointers to EventElement elements.
+		EventElement *head;
+		EventElement *tail;
 
 		/**
 		 * Search for a specific Events and EventListener
 		 *
-		 * @param ev_code   Events code.
+		 * @param event     Events code.
 		 * @param f         EventListener function to call when event is dequeued.
 		 *
 		 * @return Returns the array index of the specified EventListener
 		 *         or -1 if no such event/function couple is found.
 		*/
-		byte _searchEventListener(byte ev_code, EventListener f);
+		char _searchEventListener(byte event, EventListener f);
 
 		/**
 		 * Search for a specific Events
 		 *
-		 * @param ev_code   Events code.
+		 * @param event     Events code.
 		 *
 		 * @return Returns the array index of the specified EventListener
 		 *         or -1 if no such event is found.
 		*/
-		byte _searchEventCode(byte ev_code);
+		char _searchEventCode(byte event);
 };
 
 #endif

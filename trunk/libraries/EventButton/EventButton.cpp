@@ -38,9 +38,11 @@
 #include <EventSystem.h>
 #include <EventButton.h>
 
-EventButton::EventButton(byte buttonPin, 
-						 unsigned int buttonHoldTime, 
-						 unsigned int buttonRepeatTime):EventElement() {
+EventButton::EventButton(
+		byte buttonPin,
+		unsigned int buttonHoldTime,
+		unsigned int buttonRepeatTime
+	):EventElement() {
 
 	// Set button pin to input
 	pin = buttonPin;
@@ -60,9 +62,11 @@ EventButton::EventButton(byte buttonPin,
 	changeTime = 0;
 }
 
-void EventButton::Check(void) {
-
-	if (repeatTime != 0 && changeTime != 0 && changeTime < millis()) {
+void EventButton::Check() {
+	unsigned long time;
+	
+	time = millis();
+	if (repeatTime != 0 && changeTime != 0 && changeTime < time) {
 		stateCurrent = false;
 		statePrevious = false;
 		stateRepeat = true;
@@ -79,9 +83,9 @@ void EventButton::Check(void) {
 	if (stateCurrent != statePrevious) {
 		if (stateCurrent && repeatTime != 0) {
 			if (stateRepeat) {
-				changeTime = millis() + repeatTime;
+				changeTime = time + repeatTime;
 			} else {
-				changeTime = millis() + holdTime;
+				changeTime = time + holdTime;
 			}
 		}
 		if (stateCurrent) {

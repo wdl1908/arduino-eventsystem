@@ -41,5 +41,8 @@ EventElement::EventElement() {
 	systemEventDispatcher.addEventElement(this);
 }
 
-void EventElement::Check(void) {
+void EventElement::Check() {
+}
+
+void EventElement::HandleEvent(byte event, int param) {
 }

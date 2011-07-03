@@ -43,7 +43,8 @@ EventDispatcher::EventDispatcher(EventQueue* evQueue) {
 
 	q = evQueue;
 	numListeners = 0;
-	numElements = 0;
+	head = 0;
+	tail = 0;
 }
 
 boolean EventDispatcher::addEventElement(EventElement *element) {
@@ -53,18 +54,19 @@ boolean EventDispatcher::addEventElement(EventElement *element) {
 		return false;
 	}
 
-	// element table is full
-	if (numElements == MAX_ELEMENTS) {
-		return false;
+	element->next = 0;
+	if (head == 0) {
+		head = element;
+		tail = element;
+	} else {
+		tail->next = element;
+		tail = element;
 	}
-	
-	elements[numElements] = element;
-	numElements++;
 	return true;
 }
 
-boolean EventDispatcher::addEventListener(byte ev_code, EventListener f, OverwriteOption overwrite) {
-	byte k;
+boolean EventDispatcher::addEventListener(byte event, EventListener f, OverwriteOption overwrite) {
+	char k;
 	
 	// argument check
 	if (f == 0) {
@@ -72,7 +74,7 @@ boolean EventDispatcher::addEventListener(byte ev_code, EventListener f, Overwri
 	}
 	
 	if (overwrite == OVERWRITE_EVENT) {
-		k = _searchEventCode(ev_code);
+		k = _searchEventCode(event);
 		if (k >= 0) {           // event code found
 			callback[k] = f;    // replace function
 			enabled[k] = true;  // it's an add(), so enable the listener
@@ -88,7 +90,7 @@ boolean EventDispatcher::addEventListener(byte ev_code, EventListener f, Overwri
 	}
 	
 	callback[numListeners] = f;
-	eventCode[numListeners] = ev_code;
+	eventCode[numListeners] = event;
 	enabled[numListeners] = true;
 	
 	numListeners++;
@@ -97,15 +99,15 @@ boolean EventDispatcher::addEventListener(byte ev_code, EventListener f, Overwri
 }
 
 
-boolean EventDispatcher::removeEventListener(byte ev_code, EventListener f) {
+boolean EventDispatcher::removeEventListener(byte event, EventListener f) {
 	byte i;
-	byte k;
+	char k;
 
 	if (numListeners == 0) {
 		return false;
 	}
 
-	k = _searchEventListener(ev_code, f);
+	k = _searchEventListener(event, f);
 	if (k < 0) {
 		return false;
 	}
@@ -122,14 +124,14 @@ boolean EventDispatcher::removeEventListener(byte ev_code, EventListener f) {
 }
 
 
-boolean EventDispatcher::enableEventListener(byte ev_code, EventListener f, boolean enable) {
-	byte k;
+boolean EventDispatcher::enableEventListener(byte event, EventListener f, boolean enable) {
+	char k;
 	
 	if (numListeners == 0) {
 		return false;
 	}
 	
-	k = _searchEventListener(ev_code, f);
+	k = _searchEventListener(event, f);
 	if (k < 0) {
 		return false;
 	}
@@ -140,14 +142,14 @@ boolean EventDispatcher::enableEventListener(byte ev_code, EventListener f, bool
 }
 
 
-boolean EventDispatcher::isEventListenerEnabled(byte ev_code, EventListener f) {
-	byte k;
+boolean EventDispatcher::isEventListenerEnabled(byte event, EventListener f) {
+	char k;
 
 	if (numListeners == 0) {
 		return false;
 	}
 
-	k = _searchEventListener(ev_code, f);
+	k = _searchEventListener(event, f);
 	if (k < 0) {
 		return false;
 	}
@@ -161,10 +163,13 @@ void EventDispatcher::run() {
 	int param;
 	byte i;
 	boolean handlerFound;
+	EventElement *element;
 
 	// Start checking all the registered EventElement entries.
-	for (i = 0; i < numElements; i++) {
-		elements[i]->Check();
+	element = head;
+	while (element) {
+		element->Check();
+		element = element->next;
 	}
 
 	// Process all the added Events and dispatches them to the registered EventListener.
@@ -212,11 +217,11 @@ void EventDispatcher::enableDefaultListener(boolean enable) {
 }
 
 
-byte EventDispatcher::_searchEventListener(byte ev_code, EventListener f) {
+char EventDispatcher::_searchEventListener(byte event, EventListener f) {
 	byte i;
 
 	for (i = 0; i < numListeners; i++) {
-		if ((eventCode[i] == ev_code) && (callback[i] == f)) {
+		if ((eventCode[i] == event) && (callback[i] == f)) {
 			return i;
 		}
 	}
@@ -225,11 +230,11 @@ byte EventDispatcher::_searchEventListener(byte ev_code, EventListener f) {
 }
 
 
-byte EventDispatcher::_searchEventCode(byte ev_code) {
+char EventDispatcher::_searchEventCode(byte event) {
 	byte i;
 
 	for (i = 0; i < numListeners; i++) {
-		if (eventCode[i] == ev_code) {
+		if (eventCode[i] == event) {
 			return i;
 		}
 	}
