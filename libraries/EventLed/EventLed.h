@@ -61,6 +61,12 @@ class EventLed : public EventElement {
 		 */
 		virtual void Check();
 
+		/**
+		 * Handle events destined for this element.
+		 *
+		 * @param event Events code
+		 * @param param Value associated with the Event
+		 */
 		virtual void HandleEvent(byte event, int param);
 
 		void On();

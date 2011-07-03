@@ -53,8 +53,19 @@ class EventElement {
 		 */
 		virtual void Check();
 
+		/**
+		 * Handle events destined for this element.
+		 *
+		 * @param event Events code
+		 * @param param Value associated with the Event
+		 */
 		virtual void HandleEvent(byte event, int param);
 
+		/**
+		 * getNext
+		 *
+		 * @return Returns the next element in the chain.
+		 */
 		EventElement *getNext() { return next; }
 	protected:
 		EventElement *next;

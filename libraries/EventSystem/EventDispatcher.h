@@ -176,7 +176,7 @@ class EventDispatcher {
 
 	private:
 		EventQueue* q;                         ///< EventQueue to be managed.
-		byte numListeners;                     ///<  Actual number of EventListener elements registered.
+		byte numListeners;                     ///< Actual number of EventListener elements registered.
 		EventListener callback[MAX_LISTENERS]; ///< Pointers to EventListener callback functions.
 		byte eventCode[MAX_LISTENERS];         ///< Each EventListener observes a specific Events type.
 		boolean enabled[MAX_LISTENERS];        ///< Each EventListener can be enabled or disabled.
