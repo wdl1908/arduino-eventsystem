@@ -61,7 +61,7 @@ byte EventQueue::getNumEvents() {
 }
 
 
-boolean EventQueue::enqueueEvent(byte ev_code, int ev_param) {
+boolean EventQueue::enqueueEvent(byte event, int param) {
 
 	if (isFull()) {
 		// log the queue full error
@@ -71,8 +71,8 @@ boolean EventQueue::enqueueEvent(byte ev_code, int ev_param) {
 	}
 	
 	// store the event
-	eventQueue[eventQueueHead] = ev_code;
-	eventParam[eventQueueHead] = ev_param;
+	eventQueue[eventQueueHead] = event;
+	eventParam[eventQueueHead] = param;
 	
 	// update queue head value
 	eventQueueHead = (eventQueueHead + 1) % EVQUEUE_SIZE;;
@@ -84,7 +84,7 @@ boolean EventQueue::enqueueEvent(byte ev_code, int ev_param) {
 }
 
 
-boolean EventQueue::dequeueEvent(byte* ev_code, int* ev_param) {
+boolean EventQueue::dequeueEvent(byte* event, int* param) {
 
 	if (numEvents == 0) {
 		return false;
@@ -94,8 +94,8 @@ boolean EventQueue::dequeueEvent(byte* ev_code, int* ev_param) {
 	
 	// store event code and event parameter
 	// into the user-supplied variables
-	*ev_code = eventQueue[eventQueueTail];
-	*ev_param = eventParam[eventQueueTail];
+	*event = eventQueue[eventQueueTail];
+	*param = eventParam[eventQueueTail];
 	
 	// update number of events in queue
 	numEvents--;

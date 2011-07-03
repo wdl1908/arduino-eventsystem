@@ -81,27 +81,27 @@ class EventQueue {
 		/**
 		 * Tries to insert an event into the queue.
 		 *
-		 * @param ev_code  Events code
-		 * @param ev_param Value associated with the Event
+		 * @param event Events code
+		 * @param param Value associated with the Event
 		 *
 		 * @return
 		 *     Returns @b true if successful, @b false if the
 		 *     queue is full and the event cannot be inserted.
 		 */
-		boolean enqueueEvent(byte ev_code, int ev_param);
+		boolean enqueueEvent(byte event, int param);
 		
 		/**
 		 * Tries to extract an event from the queue.
 		 *
-		 * @param ev_code  Events code
-		 * @param ev_param Value associated with the Event
+		 * @param event Events code
+		 * @param param Value associated with the Event
 		 *
 		 * @return
 		 *     returns @b true if successful, @b false if the
 		 *     queue is empty (the parameters are not touched
 		 *     in this case)
 		 */
-		boolean dequeueEvent(byte* ev_code, int* ev_param);
+		boolean dequeueEvent(byte* event, int* param);
 		
 	private:
 		byte eventQueue[EVQUEUE_SIZE]; ///< Each event is represented by an integer code.

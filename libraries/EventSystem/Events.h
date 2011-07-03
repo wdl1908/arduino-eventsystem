@@ -59,7 +59,7 @@ class Events {
 			EV_BUTTON_PRESS,     ///< a button was pressed  - param: pin number
 			EV_BUTTON_RELEASE,   ///< a button was released - param: pin number
 			EV_CHAR,             ///< a character was received - param: the character to be notified
-			EV_TIME,             ///< generic time event    - param: a time value
+			EV_TIME,             ///< generic time event       - param: a time value
 			                     ///< (exact meaning is defined by the code
 			                     ///< inserting this event into the queue)
 			EV_TIMER0,           ///< generic timer events  - param: same as EV_TIME
@@ -82,7 +82,13 @@ class Events {
 			EV_MENU7,
 			EV_MENU8,
 			EV_MENU9,
-			EV_SERIAL,           ///< serial event - param: the return value of Serial.read()
+			EV_LED_ON,           ///< Turn the led on  - param: pin number
+			EV_LED_OFF,          ///< Turn the led off - param: pin number
+			EV_LED_TOGGLE,       ///< Toggle the led   - param: pin number
+			EV_LED_FADEIN,       ///< Fade the led In  - param: pin number
+			EV_LED_FADEOUT,      ///< Fade the led Out - param: pin number
+			EV_LED_BLINK,        ///< Blink the led    - param: pin number
+			EV_SERIAL,           ///< serial event     - param: the return value of Serial.read()
 			EV_PAINT             ///< LCD screen needs to be refreshed - param: none
 		};
 };
