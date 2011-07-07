@@ -88,7 +88,7 @@ class EventQueue {
 		 *     Returns @b true if successful, @b false if the
 		 *     queue is full and the event cannot be inserted.
 		 */
-		boolean enqueueEvent(byte event, int param);
+		boolean enqueueEvent(byte event, int param = 0);
 		
 		/**
 		 * Tries to extract an event from the queue.

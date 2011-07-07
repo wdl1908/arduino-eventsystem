@@ -7,7 +7,7 @@
  *     Marcello Romani     mromani@ottotecnica.com
  *     Willy De la Court   wdlarduino@linux-lovers.be
  *
- * @version 1.2
+ * @version 1.3
  *
  * @copyright (c) 2010 OTTOTECNICA Italy
  *
@@ -31,6 +31,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @changelog
+ *    - 1.3 2011-07-07 - Willy De la Court : Don't enqueue the EV_NONE event
  *    - 1.2 2011-06-30 - Willy De la Court : Code cleanup
  *    - 1.1 2011-06-29 - Willy De la Court : Doc changes
  *    - 1.0 2010-07-14 - Marcello Romani : Initial Version
@@ -63,13 +64,17 @@ byte EventQueue::getNumEvents() {
 
 boolean EventQueue::enqueueEvent(byte event, int param) {
 
+	if (event == Events::EV_NONE) {
+		// Don't bother to enqueue the EV_NONE event.
+		return true;
+	}
 	if (isFull()) {
 		// log the queue full error
 		// Serial.print(millis());
 		// Serial.println(" QUEUE FULL");
 		return false;
 	}
-	
+
 	// store the event
 	eventQueue[eventQueueHead] = event;
 	eventParam[eventQueueHead] = param;

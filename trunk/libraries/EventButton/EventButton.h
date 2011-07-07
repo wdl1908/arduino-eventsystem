@@ -5,7 +5,7 @@
  *
  * @author Willy De la Court
  *
- * @version 1.2
+ * @version 1.3
  *
  * @copyright (c) 2011 Willy De la Court, Belgium
  *
@@ -29,6 +29,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @changelog
+ *    - 1.3 2011-07-07 - Willy De la Court : Comments and params for press release events
  *    - 1.2 2011-06-30 - Willy De la Court : Added EventElement inheritance
  *    - 1.1 2011-06-30 - Willy De la Court : Code cleanup
  *    - 1.0 2011-06-29 - Willy De la Court : Initial Version
@@ -55,8 +56,16 @@ class EventButton : public EventElement {
 		 * @param buttonPin        The pin number of the digital pin the button is connected to.
 		 * @param buttonHoldTime   The time to wait until the button is considered in the hold state.
 		 * @param buttonRepeatTime The time between repeats.
+		 * @param pressEvent       Event to generate when the button is pressed.
+		 * @param releaseEvent     Event to generate when the button is released.
 		 */
-		EventButton(byte buttonPin, unsigned int buttonHoldTime = 0, unsigned int buttonRepeatTime = 0);
+		EventButton(
+			byte buttonPin, 
+			unsigned int buttonHoldTime = 0, 
+			unsigned int buttonRepeatTime = 0,
+			byte pressEvent = Events::EV_BUTTON_PRESS,
+			byte releaseEvent = Events::EV_BUTTON_RELEASE
+		);
 		
 		/**
 		 * Check the button and generate events when the button state changes.
@@ -71,6 +80,8 @@ class EventButton : public EventElement {
 		unsigned int holdTime;      ///< Time to wait before going into repeat mode.
 		unsigned int repeatTime;    ///< Time to wait between repeats.
 		unsigned long changeTime;   ///< Last time the button changed state.
+		byte press;                 ///< Event to generate when the button is pressed.
+		byte release;               ///< Event to generate when the button is released.
 };
 
 #endif

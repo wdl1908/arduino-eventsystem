@@ -5,7 +5,7 @@
  *
  * @author Willy De la Court
  *
- * @version 1.0
+ * @version 1.1
  *
  * @copyright (c) 2011 Willy De la Court, Belgium
  *
