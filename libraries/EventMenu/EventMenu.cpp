@@ -78,7 +78,7 @@ EventMenuItem::EventMenuItem(char *menuName, byte eventCode) {
 	nextSibling = 0;
 	currentLine = 0;
 	name = menuName;
-	event = eventCode;
+	enterEvent = eventCode;
 }
 
 void EventMenuItem::addChild(EventMenuItem *child) {
@@ -141,7 +141,7 @@ EventMenuItem *EventMenuItem::HandleEvent(byte event, byte rows, byte cols) {
 			}
 			break;
 		case Events::EV_MENU_ENTER:
-			systemEventQueue.enqueueEvent(event);
+			systemEventQueue.enqueueEvent(enterEvent);
 			if (firstChild) {
 				firstChild->currentLine = 0;
 				return firstChild;
@@ -160,14 +160,23 @@ EventMenuRoot::EventMenuRoot(LiquidCrystal *lcdDisplay, byte maxCols, byte maxRo
 	cols = maxCols;
 	lcd = lcdDisplay;
 	current = 0;
-	lcd->begin(rows, cols);
+	lcd->begin(cols, rows);
 	lcd->createChar(ARROW_UP,         arrow_up);
 	lcd->createChar(ARROW_DOWN,       arrow_down);
 	lcd->createChar(ARROW_UP_BLOCK,   arrow_up_block);
 	lcd->createChar(ARROW_DOWN_BLOCK, arrow_down_block);
 }
 
+// FIXME this is ugly. Need to revise the object inheritance.
+void EventMenuRoot::addChild(EventMenuItem *child) {
+	EventMenuItem::addChild(child);
+	child->parent = 0;
+}
+
 void EventMenuRoot::HandleEvent(byte event, int param) {
+	if (event == Events::EV_PAINT) {
+		Display();
+	}
 	if (!current)
 		current = firstChild;
 	if (current)  {
@@ -177,9 +186,6 @@ void EventMenuRoot::HandleEvent(byte event, int param) {
 			current = current->HandleEvent(event, rows, cols);
 			systemEventQueue.enqueueEvent(Events::EV_PAINT);
 		}
-	}
-	if (event == Events::EV_PAINT) {
-		Display();
 	}
 }
 
@@ -196,10 +202,16 @@ void EventMenuRoot::Display() {
 		needTopArrow = false;
 		needBottomArrow = false;
 		// Display the current line
-		current->Display(lcd, currentLine, true);
+		current->Display(lcd, current->currentLine, true);
 		// Display all lines above the current line if any.
-		line = currentLine;
+		line = current->currentLine;
 		item = current;
+		if (line == 0 && item->prevSibling) {
+			needTopArrow = true;
+		}
+		if (line == rows - 1 && item->nextSibling) {
+			needBottomArrow = true;
+		}
 		while (line > 0) {
 			line--;
 			item = item->prevSibling;
@@ -213,9 +225,9 @@ void EventMenuRoot::Display() {
 			}
 		}
 		// Display all lines below the current line if any.
-		line = currentLine;
+		line = current->currentLine;
 		item = current;
-		while (line < rows) {
+		while (line < rows - 1) {
 			line++;
 			item = item->nextSibling;
 			if (item) {

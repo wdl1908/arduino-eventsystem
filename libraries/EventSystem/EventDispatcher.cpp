@@ -182,6 +182,11 @@ void EventDispatcher::run() {
 				(*callback[i])(event, param);
 			}
 		}
+		element = head;
+		while (element) {
+			element->HandleEvent(event, param);
+			element = element->next;
+		}
 
 		if (!handlerFound) {
 			if ((defaultCallback != 0) && (defaultCallbackEnabled)) {
