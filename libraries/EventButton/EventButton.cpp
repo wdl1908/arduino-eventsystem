@@ -29,6 +29,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @changelog
+ *    - 1.3 2011-07-07 - Willy De la Court : Comments and params for press release events
  *    - 1.2 2011-06-30 - Willy De la Court : Added EventElement inheritance
  *    - 1.1 2011-06-30 - Willy De la Court : Code cleanup
  *    - 1.0 2011-06-29 - Willy De la Court : Initial Version
@@ -41,7 +42,9 @@
 EventButton::EventButton(
 		byte buttonPin,
 		unsigned int buttonHoldTime,
-		unsigned int buttonRepeatTime
+		unsigned int buttonRepeatTime,
+		byte pressEvent,
+		byte releaseEvent
 	):EventElement() {
 
 	// Set button pin to input
@@ -60,13 +63,19 @@ EventButton::EventButton(
 	holdTime   = buttonHoldTime;
 	repeatTime = buttonRepeatTime;
 	changeTime = 0;
+	
+	// Set press / release event codes.
+	press = pressEvent;
+	release = releaseEvent;
 }
 
 void EventButton::Check() {
 	unsigned long time;
 	
 	time = millis();
+	// Check if in repeat mode and the timer exired
 	if (repeatTime != 0 && changeTime != 0 && changeTime < time) {
+		// Simulate a button release
 		stateCurrent = false;
 		statePrevious = false;
 		stateRepeat = true;
@@ -74,24 +83,29 @@ void EventButton::Check() {
 
 	statePrevious = stateCurrent;
 	if (digitalRead(pin)) {
+		// If the pin is High the button is not pressed.
 		stateCurrent = false;
 		stateRepeat = false;
 		changeTime = 0;
 	} else {
+		// If the pin is Low the button is pressed.
 		stateCurrent = true;
 	}
 	if (stateCurrent != statePrevious) {
+		// Do we need to repeat?
 		if (stateCurrent && repeatTime != 0) {
+			// Is this the first time the repeat action is called for?
 			if (stateRepeat) {
 				changeTime = time + repeatTime;
 			} else {
 				changeTime = time + holdTime;
 			}
 		}
+		// Send events when the status changes
 		if (stateCurrent) {
-			systemEventQueue.enqueueEvent(Events::EV_BUTTON_PRESS, (int)pin);
+			systemEventQueue.enqueueEvent(press, (int)pin);
 		} else {
-			systemEventQueue.enqueueEvent(Events::EV_BUTTON_RELEASE, (int)pin);
+			systemEventQueue.enqueueEvent(release, (int)pin);
 		}
 	}
 }
