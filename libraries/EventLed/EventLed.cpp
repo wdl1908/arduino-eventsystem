@@ -177,13 +177,3 @@ void EventLed::FadeOut() {
 		lastEvent = Events::EV_LED_FADEOUT;
 	}
 }
-
-void ledHandler(byte event, int param) {
-	EventElement *element;
-
-	element = systemEventDispatcher.getEventElementHead();
-	while (element) {
-		element->HandleEvent(event, param);
-		element = element->getNext();
-	}
-}

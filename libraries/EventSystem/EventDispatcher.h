@@ -182,8 +182,8 @@ class EventDispatcher {
 		boolean enabled[MAX_LISTENERS];        ///< Each EventListener can be enabled or disabled.
 		EventListener defaultCallback;         ///< Callback function to be called for event types which have no EventListener.
 		boolean defaultCallbackEnabled;        ///< once set, the default callback function can be enabled or disabled.
-		EventElement *head;
-		EventElement *tail;
+		EventElement *head;                    ///< Head of the EventElement chain used to accept events from the queue.
+		EventElement *tail;                    ///< Tail of the EventElement chain used to accept events from the queue.
 
 		/**
 		 * Search for a specific Events and EventListener

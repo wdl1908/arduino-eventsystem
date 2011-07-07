@@ -67,7 +67,12 @@ class EventElement {
 		 * @return Returns the next element in the chain.
 		 */
 		EventElement *getNext() { return next; }
+
 	protected:
+		/**
+		 * Pointer to the next element in the EventElement chain.
+		 * This is used by EventDispatcher to send events to all the EventElements.
+		 */
 		EventElement *next;
 };
 
