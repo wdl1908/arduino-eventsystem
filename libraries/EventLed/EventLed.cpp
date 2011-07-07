@@ -52,12 +52,6 @@ EventLed::EventLed(
 	fadeTime = ledFadeTime;
 	blinkOnTime = ledBlinkOnTime;
 	blinkOffTime = ledBlinkOffTime;
-	systemEventDispatcher.addEventListener(Events::EV_LED_ON,      ledHandler, EventDispatcher::OVERWRITE_EVENT);
-	systemEventDispatcher.addEventListener(Events::EV_LED_OFF,     ledHandler, EventDispatcher::OVERWRITE_EVENT);
-	systemEventDispatcher.addEventListener(Events::EV_LED_TOGGLE,  ledHandler, EventDispatcher::OVERWRITE_EVENT);
-	systemEventDispatcher.addEventListener(Events::EV_LED_FADEIN,  ledHandler, EventDispatcher::OVERWRITE_EVENT);
-	systemEventDispatcher.addEventListener(Events::EV_LED_FADEOUT, ledHandler, EventDispatcher::OVERWRITE_EVENT);
-	systemEventDispatcher.addEventListener(Events::EV_LED_BLINK,   ledHandler, EventDispatcher::OVERWRITE_EVENT);
 }
 
 void EventLed::Check() {
