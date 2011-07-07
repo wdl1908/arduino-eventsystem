@@ -61,7 +61,7 @@ class EventMenuItem {
 		EventMenuItem *prevSibling;
 		EventMenuItem *nextSibling;
 		byte currentLine;
-		byte event;
+		byte enterEvent;
 
 	private:
 		char *name;
@@ -70,6 +70,7 @@ class EventMenuItem {
 class EventMenuRoot : public EventMenuItem, EventElement {
 	public:
 		EventMenuRoot(LiquidCrystal *lcdDisplay, byte maxCols, byte maxRows);
+		virtual void addChild(EventMenuItem *child);
 		virtual void HandleEvent(byte event, int param);
 		void Display();
 	private:
