@@ -47,7 +47,10 @@ class EventLed : public EventElement {
 		/**
 		 * Create an EventLed object.
 		 *
-		 * @param ledPin       The pin number where the led is connected to.
+		 * @param ledPin          The pin number where the led is connected to.
+		 * @param ledFadeTime     The time neede to fade a led in or out.
+		 * @param ledBlinkOnTime  Time the led is on when blinking.
+		 * @param ledBlinkOffTime Time the led is off when blinking.
 		 */
 		EventLed(
 			byte ledPin,
@@ -69,13 +72,44 @@ class EventLed : public EventElement {
 		 */
 		virtual void HandleEvent(byte event, int param);
 
+		/**
+		 * Turn the led on.
+		 */
 		void On();
+
+		/**
+		 * Turn the led off.
+		 */
 		void Off();
+
+		/**
+		 * Turn the led off when on and on when off.
+		 */
 		void Toggle();
+
+		/**
+		 * Turn the led on with a fading effect.
+		 */
 		void FadeIn();
+
+		/**
+		 * Turn the led off with a fading effect.
+		 */
 		void FadeOut();
+
+		/**
+		 * Turn the led on and off continuously.
+		 */
 		void Blink();
+
+		/**
+		 * @return @b true if the led is on.
+		 */
 		boolean isOn()  { return state == 255; };
+
+		/**
+		 * @return @b true if the led is off.
+		 */
 		boolean isOff() { return state == 0; };
 	private:
 		byte pin;       ///< Pin number of the arduino board.
@@ -86,7 +120,5 @@ class EventLed : public EventElement {
 		unsigned int blinkOnTime;    ///< Time a blinking led stays on.
 		unsigned int blinkOffTime;   ///< Time a blinking led stays on.
 };
-
-void ledHandler(byte event, int param);
 
 #endif
