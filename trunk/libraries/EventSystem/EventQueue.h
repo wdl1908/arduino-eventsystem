@@ -52,7 +52,7 @@ class EventQueue {
 		/**
 		 * The maximum number of events
 		 * the queue can hold is EVQUEUE_SIZE - 1.
-		 * Increasing this number will consume 2 * sizeof(int)
+		 * Increasing this number will consume sizeof(int) + sizeof(byte)
 		 * bytes of RAM for each unit.
 		 */
 		static const byte EVQUEUE_SIZE = 10;
@@ -104,7 +104,7 @@ class EventQueue {
 		boolean dequeueEvent(byte* event, int* param);
 		
 	private:
-		byte eventQueue[EVQUEUE_SIZE]; ///< Each event is represented by an integer code.
+		byte eventQueue[EVQUEUE_SIZE]; ///< Each event is represented by an byte code.
 		int eventParam[EVQUEUE_SIZE];  ///< Each event has a single integer parameter.
 		byte eventQueueHead;           ///< Index of event queue head.
 		byte eventQueueTail;           ///< Index of event queue tail.

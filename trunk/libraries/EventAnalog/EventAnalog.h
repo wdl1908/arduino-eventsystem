@@ -52,7 +52,14 @@ class EventAnalog : public EventElement {
 		 * @param hysteresisValue The value of the analog pin needs to change with this value to generate an Events.
 		 */
 		EventAnalog(byte analogPin, byte eventCode, int hysteresisValue);
-		
+
+		/**
+		 * Get the value of the analog pin.
+		 *
+		 * @return Returns the value of the analog pin.
+		 */
+		int getValue() { return lastValue; };
+
 		/**
 		 * Check the analog pin and generate an Events when the value falls outside the hysteresis.
 		 */
