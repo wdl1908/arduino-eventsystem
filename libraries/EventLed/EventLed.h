@@ -118,7 +118,7 @@ class EventLed : public EventElement {
 		unsigned long fadeStartTime; ///< Time the FadeIn / FadeOut started.
 		unsigned int fadeTime;       ///< Time the FadeIn / FadeOut should take.
 		unsigned int blinkOnTime;    ///< Time a blinking led stays on.
-		unsigned int blinkOffTime;   ///< Time a blinking led stays on.
+		unsigned int blinkOffTime;   ///< Time a blinking led stays off.
 };
 
 #endif
