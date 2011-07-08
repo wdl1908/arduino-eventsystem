@@ -87,13 +87,14 @@ class Events {
 			EV_LED_ON,           ///< Turn the led on  - param: pin number
 			EV_LED_OFF,          ///< Turn the led off - param: pin number
 			EV_LED_TOGGLE,       ///< Toggle the led   - param: pin number
+			EV_LED_BLINK,        ///< Blink the led    - param: pin number
 			EV_LED_FADEIN,       ///< Fade the led In  - param: pin number
 			EV_LED_FADEOUT,      ///< Fade the led Out - param: pin number
-			EV_LED_BLINK,        ///< Blink the led    - param: pin number
 
 			EV_SERIAL,           ///< serial event     - param: the return value of Serial.read()
 
-			EV_PAINT             ///< LCD screen needs to be refreshed - param: none
+			EV_PAINT,            ///< LCD screen needs to be refreshed - param: none
+			EV_ERROR = 255       ///< Error Event - param: Error number is App dependent.
 		};
 };
 
