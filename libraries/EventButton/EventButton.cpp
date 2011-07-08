@@ -58,6 +58,8 @@ EventButton::EventButton(
 	stateCurrent = false;
 	statePrevious = false;
 	stateRepeat = false;
+	millisecs = false;
+	debounce = 0xF;
 
 	// Set repeat timer values for this button
 	holdTime   = buttonHoldTime;
@@ -71,6 +73,7 @@ EventButton::EventButton(
 
 void EventButton::Check() {
 	unsigned long time;
+	byte millisecsToggle;
 	
 	time = millis();
 	// Check if in repeat mode and the timer exired
@@ -81,15 +84,24 @@ void EventButton::Check() {
 		stateRepeat = true;
 	}
 
+	// Debounce logic
+	// Take 4 samples with an interval of 2 ms each
+	millisecsToggle = time & 0x1;
+	if (millisecsToggle != millisecs) {
+		millisecs = millisecsToggle;
+		if (millisecsToggle)
+			debounce = (debounce << 1) | (digitalRead(pin) & 0x1);
+	}
 	statePrevious = stateCurrent;
-	if (digitalRead(pin)) {
-		// If the pin is High the button is not pressed.
+	if (debounce == 0x0) {
+		// If all the 4 samples taken over a time of 8ms are 0 then the button is pressed
+		stateCurrent = true;
+	}
+	if (debounce == 0xF) {
+		// If all the 4 samples taken over a time of 8ms are 1 then the button is not pressed
 		stateCurrent = false;
 		stateRepeat = false;
 		changeTime = 0;
-	} else {
-		// If the pin is Low the button is pressed.
-		stateCurrent = true;
 	}
 	if (stateCurrent != statePrevious) {
 		// Do we need to repeat?
