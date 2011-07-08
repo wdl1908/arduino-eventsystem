@@ -2,6 +2,11 @@
 
 An EventElement can be one of three type of elements
 
-  # An element that can generate Events
-  # An element that can consume Events
-  # An element that can generate and consume Events
+  # An element that can generate Events.
+    # EventAnalog
+    # EventButton
+    # EventTimer
+  # An element that can consume Events.
+    # EventLed
+  # An element that can generate and consume Events.
+    # EventMenu
