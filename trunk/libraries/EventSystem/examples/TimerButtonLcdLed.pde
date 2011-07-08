@@ -1,24 +1,57 @@
-/*
-*/
+/**
+ * @file: TimerButtonLcdLed.pde
+ *
+ * @about Part of Arduino Event System.
+ *
+ * @author Willy De la Court
+ *
+ * @version 1.0
+ *
+ * @copyright (c) 2011 Willy De la Court, Belgium
+ *
+ * @license
+ *
+ * This library is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU Lesser
+ * General Public License as published by the Free Software
+ * Foundation; either version 2.1 of the License, or (at
+ * your option) any later version.
+ *
+ * This library is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser
+ * General Public License along with this library; if not,
+ * write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+ *
+ * @changelog
+ *    - 1.0 2011-07-08 - Willy De la Court : Initial Version
+ *
+ */
+
 #include <EventSystem.h>
 #include <EventButton.h>
 #include <EventTimer.h>
-#include <EventAnalog.h>
 #include <EventLed.h>
 #include <LiquidCrystal.h>
 
-#define BUTTON_DOWN  6
-#define BUTTON_UP    7
-#define BUTTON_RESET 8
+// Buttons need to be connected to GND
+#define BUTTON_UP     6
+#define BUTTON_DOWN   7
+#define BUTTON_RESET  8
 
-#define HOLD_TIME   1000
-#define REPEAT_TIME 400
+// Led must be connected to GND and serie resistor
+#define LED           10
 
 EventButton btnDown  = EventButton(BUTTON_DOWN, HOLD_TIME, REPEAT_TIME);
 EventButton btnUp    = EventButton(BUTTON_UP,   HOLD_TIME, REPEAT_TIME);
 EventButton btnReset = EventButton(BUTTON_RESET);
 // Connect a Led on pin 10
-EventLed led = EventLed(10, 2000, 250, 250);
+EventPWMLed led = EventPWMLed(LED, LED_FADETIME, LED_BLINKTIME, LED_BLINKTIME);
 
 EventTimer secs = EventTimer(Events::EV_TIME, 1000);
 
