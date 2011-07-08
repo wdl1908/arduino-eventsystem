@@ -5,4 +5,4 @@ An EventElement can be one of three type of elements
   # An element that can generate Events
   # An element that can consume Events
   # An element that can generate and consume Events
-
+ #
