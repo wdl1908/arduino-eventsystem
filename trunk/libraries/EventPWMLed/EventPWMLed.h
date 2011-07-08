@@ -1,5 +1,5 @@
 /**
- * @file EventLed.h
+ * @file EventPWMLed.h
  *
  * @about Part of Arduino Event System.
  *
@@ -29,41 +29,41 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @changelog
- *    - 1.0 2011-07-08 - Willy De la Court : Initial Version
+ *    - 1.0 2011-07-02 - Willy De la Court : Initial Version
  *
  */
 
 #include <EventSystem.h>
 #include <EventElement.h>
+#include <EventLed.h>
 
-#ifndef EVENTSIMPLELED_H
-#define EVENTSIMPLELED_H
+#ifndef EVENTLED_H
+#define EVENTLED_H
 
-// the LED_On should be 255 in preparation of the class EventPWMLed
-#define LED_ON  255
-#define LED_OFF 0
-#define LED_BLINKTIME 250
+#define LED_FADETIME  2000
 
 /**
- * Led Control. The led must be connected to GND on a digital or Analog pin with a serie resistor.
+ * Led Control. The led must be connected to GND on a PWM pin with a serie resistor.
  */
-class EventLed : public EventElement {
+class EventPWMLed : public EventLed {
 	public:
 		/**
-		 * Create an EventLed object.
+		 * Create an EventPWMLed object.
 		 *
 		 * @param ledPin          The pin number where the led is connected to.
+		 * @param ledFadeTime     The time neede to fade a led in or out. Default is 2000ms.
 		 * @param ledBlinkOnTime  Time the led is on when blinking. Default is 250ms.
 		 * @param ledBlinkOffTime Time the led is off when blinking. Default is 250ms.
 		 */
-		EventLed(
+		EventPWMLed(
 			byte ledPin,
+			int ledFadeTime = LED_FADETIME,
 			int ledBlinkOnTime = LED_BLINKTIME,
 			int ledBlinkOffTime = LED_BLINKTIME
 		);
 		
 		/**
-		 * Check the state of the led and process Blink actions.
+		 * Check the state of the led and process Blink / FadeIn / FadeOut actions.
 		 */
 		virtual void Check();
 
@@ -76,41 +76,17 @@ class EventLed : public EventElement {
 		virtual void HandleEvent(byte event, int param);
 
 		/**
-		 * Turn the led on.
+		 * Turn the led on with a fading effect.
 		 */
-		void On();
+		void FadeIn();
 
 		/**
-		 * Turn the led off.
+		 * Turn the led off with a fading effect.
 		 */
-		void Off();
+		void FadeOut();
 
-		/**
-		 * Turn the led off when on and on when off.
-		 */
-		void Toggle();
-
-		/**
-		 * Turn the led on and off continuously.
-		 */
-		void Blink();
-
-		/**
-		 * @return @b true if the led is on.
-		 */
-		boolean isOn()  { return state == LED_ON; };
-
-		/**
-		 * @return @b true if the led is off.
-		 */
-		boolean isOff() { return state == LED_OFF; };
-	protected:
-		byte pin;       ///< Pin number of the arduino board.
-		byte state;     ///< state of the led 255 is on 0 is off.
-		byte lastEvent; ///< Last event that was requested for this led.
-		unsigned long startTime;      ///< Time the Blink started.
-		unsigned int blinkOnTime;     ///< Time a blinking led stays on.
-		unsigned int blinkOffTime;    ///< Time a blinking led stays off.
+	private:
+		unsigned int fadeTime;       ///< Time the FadeIn / FadeOut should take.
 };
 
 #endif

@@ -38,7 +38,6 @@
 
 EventLed::EventLed(
 		byte ledPin,
-		int ledFadeTime,
 		int ledBlinkOnTime,
 		int ledBlinkOffTime
 	):EventElement() {
@@ -49,7 +48,6 @@ EventLed::EventLed(
 	
 	// Turn the led off
 	Off();
-	fadeTime = ledFadeTime;
 	blinkOnTime = ledBlinkOnTime;
 	blinkOffTime = ledBlinkOffTime;
 }
@@ -57,49 +55,25 @@ EventLed::EventLed(
 void EventLed::Check() {
 	int timeElapsed;
 	byte newState;
-	unsigned long temp;
+	unsigned long time;
 
-	if (lastEvent == Events::EV_LED_FADEIN || lastEvent == Events::EV_LED_FADEOUT) {
-		timeElapsed = millis() - fadeStartTime;
-		temp = (uint32_t) timeElapsed * 256L / (uint32_t) fadeTime;
-		switch (lastEvent) {
-			case Events::EV_LED_FADEIN:
-				newState = 255 * temp * temp / 65536L;
-				state = newState;
-				if (state == 255 || timeElapsed > fadeTime) {
-					On();
-				}
-				break;
-			case Events::EV_LED_FADEOUT:
-				newState = -255 * temp * (temp - 512L) / 65536L;
-				state = 255 - newState;
-				if (state == 0 || timeElapsed > fadeTime) {
-					Off();
-				}
-				break;
-		}
-		analogWrite(pin, state);
-	} else if (lastEvent == Events::EV_LED_BLINK) {
-		temp = millis();
-		if (isOn() && fadeStartTime + blinkOnTime < temp) {
-			state = 0;
-			analogWrite(pin, state);
-			fadeStartTime = temp;
-		} else if (isOff() && fadeStartTime + blinkOffTime < temp) {
-			state = 255;
-			analogWrite(pin, state);
-			fadeStartTime = temp;
+	if (lastEvent == Events::EV_LED_BLINK) {
+		time = millis();
+		if (isOn() && startTime + blinkOnTime < time) {
+			state = LED_OFF;
+			digitalWrite(pin, state);
+			startTime = time;
+		} else if (isOff() && startTime + blinkOffTime < time) {
+			state = LED_ON;
+			digitalWrite(pin, state);
+			startTime = time;
 		}
 	}
 }
 
 void EventLed::HandleEvent(byte event, int param) {
-	if (	event == Events::EV_LED_ON ||
-			event == Events::EV_LED_OFF ||
-			event == Events::EV_LED_TOGGLE ||
-			event == Events::EV_LED_FADEIN ||
-			event == Events::EV_LED_FADEOUT ||
-			event == Events::EV_LED_BLINK) {
+	if (event >= Events::EV_LED_ON ||
+		event <= Events::EV_LED_BLINK) {
 		
 		if (param == pin) {
 			switch (event) {
@@ -115,14 +89,6 @@ void EventLed::HandleEvent(byte event, int param) {
 					Toggle();
 					break;
 
-				case Events::EV_LED_FADEIN:
-					FadeIn();
-					break;
-
-				case Events::EV_LED_FADEOUT:
-					FadeOut();
-					break;
-
 				case Events::EV_LED_BLINK:
 					Blink();
 					break;
@@ -132,14 +98,14 @@ void EventLed::HandleEvent(byte event, int param) {
 }
 
 void EventLed::On() {
-	state = 255;
-	analogWrite(pin, state);
+	state = LED_ON;
+	digitalWrite(pin, state);
 	lastEvent = Events::EV_LED_ON;
 }
 
 void EventLed::Off() {
-	state = 0;
-	analogWrite(pin, state);
+	state = LED_OFF;
+	digitalWrite(pin, state);
 	lastEvent = Events::EV_LED_OFF;
 }
 
@@ -152,22 +118,9 @@ void EventLed::Toggle() {
 }
 
 void EventLed::Blink() {
-	state = 255;
-	analogWrite(pin, state);
-	fadeStartTime = millis();
+	state = LED_ON;
+	digitalWrite(pin, state);
+	startTime = millis();
 	lastEvent = Events::EV_LED_BLINK;
 }
 
-void EventLed::FadeIn() {
-	if (lastEvent == Events::EV_LED_OFF) {
-		fadeStartTime = millis();
-		lastEvent = Events::EV_LED_FADEIN;
-	}
-}
-
-void EventLed::FadeOut() {
-	if (lastEvent == Events::EV_LED_ON) {
-		fadeStartTime = millis();
-		lastEvent = Events::EV_LED_FADEOUT;
-	}
-}

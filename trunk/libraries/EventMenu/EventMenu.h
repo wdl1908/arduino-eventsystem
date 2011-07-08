@@ -49,7 +49,7 @@ class EventMenuRoot;
 class EventMenuItem {
 	friend class EventMenuRoot;
 	public:
-		EventMenuItem(char *menuName, byte eventCode = Events::EV_NONE);
+		EventMenuItem(char *menuName, byte eventCode = Events::EV_NONE, int param = 0);
 		virtual void addChild(EventMenuItem *child);
 		EventMenuItem *HandleEvent(byte event, byte rows, byte cols);
 		void Display(LiquidCrystal *lcd, byte line, boolean active = false);
@@ -62,6 +62,7 @@ class EventMenuItem {
 		EventMenuItem *nextSibling;
 		byte currentLine;
 		byte enterEvent;
+		int enterParam;
 
 	private:
 		char *name;

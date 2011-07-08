@@ -70,7 +70,7 @@ byte arrow_down_block[8]     = {0x1F,  // XXXXX
 								0x0A,  // -X-X-
 								0x04}; // --X--
 
-EventMenuItem::EventMenuItem(char *menuName, byte eventCode) {
+EventMenuItem::EventMenuItem(char *menuName, byte eventCode, int param) {
 	parent = 0;
 	firstChild = 0;
 	lastChild = 0;
@@ -79,6 +79,7 @@ EventMenuItem::EventMenuItem(char *menuName, byte eventCode) {
 	currentLine = 0;
 	name = menuName;
 	enterEvent = eventCode;
+	enterParam = param;
 }
 
 void EventMenuItem::addChild(EventMenuItem *child) {
@@ -141,7 +142,7 @@ EventMenuItem *EventMenuItem::HandleEvent(byte event, byte rows, byte cols) {
 			}
 			break;
 		case Events::EV_MENU_ENTER:
-			systemEventQueue.enqueueEvent(enterEvent);
+			systemEventQueue.enqueueEvent(enterEvent, enterParam);
 			if (firstChild) {
 				firstChild->currentLine = 0;
 				return firstChild;
