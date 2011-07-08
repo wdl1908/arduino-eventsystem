@@ -74,9 +74,11 @@ class EventButton : public EventElement {
 
 	private:
 		byte pin;                   ///< Pin number of the arduino board.
-		boolean stateCurrent;       ///< Current state of the button.
-		boolean statePrevious;      ///< Previous state of the button.
-		boolean stateRepeat;        ///< Is the button repeating.
+		unsigned millisecs : 1;     ///< Toggle every ms.
+		unsigned debounce : 4;      ///< debounce shift register.
+		unsigned statePrevious : 1; ///< Previous state of the button.
+		unsigned stateCurrent : 1;  ///< Current state of the button.
+		unsigned stateRepeat : 1;   ///< Is the button repeating.
 		unsigned int holdTime;      ///< Time to wait before going into repeat mode.
 		unsigned int repeatTime;    ///< Time to wait between repeats.
 		unsigned long changeTime;   ///< Last time the button changed state.
