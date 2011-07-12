@@ -40,12 +40,12 @@
 #define EVENTSIMPLELED_H
 
 // the LED_On should be 255 in preparation of the class EventPWMLed
-#define LED_ON  255
-#define LED_OFF 0
-#define LED_BLINKTIME 250
+#define LED_ON  255        ///< PWM Value to turn the led on
+#define LED_OFF 0          ///< PWM Value to turn the led off
+#define LED_BLINKTIME 250  ///< Default Blink time
 
 /**
- * Led Control. The led must be connected to GND on a digital or Analog pin with a serie resistor.
+ * Led Control. The led must be connected to GND on a digital or digital PWM pin with a serie resistor.
  */
 class EventLed : public EventElement {
 	public:

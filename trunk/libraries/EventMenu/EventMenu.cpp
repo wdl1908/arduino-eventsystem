@@ -36,8 +36,10 @@
 #include <LiquidCrystal.h>
 #include <EventMenu.h>
 
-// Custom characters
 // FIXME should be in PROGMEM
+/**
+ * Character bit matrix for up arrow
+ */
 byte arrow_up[8]             = {0x04,  // --X--
 								0x0A,  // -X-X-
 								0x11,  // X---X
@@ -46,6 +48,9 @@ byte arrow_up[8]             = {0x04,  // --X--
 								0x00,  // -----
 								0x00}; // -----
 
+/**
+ * Character bit matrix for down arrow
+ */
 byte arrow_down[8]           = {0x00,  // -----
 								0x00,  // -----
 								0x00,  // -----
@@ -54,6 +59,9 @@ byte arrow_down[8]           = {0x00,  // -----
 								0x0A,  // -X-X-
 								0x04}; // --X--
 
+/**
+ * Character bit matrix for up arrow with block
+ */
 byte arrow_up_block[8]       = {0x04,  // --X--
 								0x0A,  // -X-X-
 								0x11,  // X---X
@@ -62,6 +70,9 @@ byte arrow_up_block[8]       = {0x04,  // --X--
 								0x1F,  // XXXXX
 								0x1F}; // XXXXX
 
+/**
+ * Character bit matrix for down arrow with block
+ */
 byte arrow_down_block[8]     = {0x1F,  // XXXXX
 								0x1F,  // XXXXX
 								0x1F,  // XXXXX
@@ -100,7 +111,7 @@ void EventMenuItem::Display(LiquidCrystal *lcd, byte line, boolean active) {
 	currentLine = line;
 	lcd->setCursor(0, line);
 	if (active) {
-		lcd->print((char)0x7E);
+		lcd->print((char)0x7E); // right arrow
 	} else {
 		lcd->print((char)' ');
 	}
