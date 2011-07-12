@@ -40,7 +40,7 @@
 #ifndef EVENTLED_H
 #define EVENTLED_H
 
-#define LED_FADETIME  2000
+#define LED_FADETIME  2000 ///< Default fadein / fadeout time.
 
 /**
  * Led Control. The led must be connected to GND on a PWM pin with a serie resistor.

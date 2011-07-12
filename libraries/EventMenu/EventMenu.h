@@ -40,10 +40,10 @@
 #ifndef  EVENTMENU_H
 #define  EVENTMENU_H
 
-#define ARROW_UP         0
-#define ARROW_DOWN       1
-#define ARROW_UP_BLOCK   2
-#define ARROW_DOWN_BLOCK 3
+#define ARROW_UP         0 ///< Character code for custom arrow up character
+#define ARROW_DOWN       1 ///< Character code for custom arrow down character
+#define ARROW_UP_BLOCK   2 ///< Character code for custom arrow up + block character
+#define ARROW_DOWN_BLOCK 3 ///< Character code for custom arrow down + block character
 
 class EventMenuRoot;
 class EventMenuItem {
