@@ -47,12 +47,36 @@ EventButton::EventButton(
 		byte releaseEvent
 	):EventElement() {
 
+	buttonHal = &nativePinHAL;
+	init(buttonPin, buttonHoldTime, buttonRepeatTime, pressEvent, releaseEvent);
+}
+
+EventButton::EventButton(
+		HAL *hal,
+		byte buttonPin,
+		unsigned int buttonHoldTime,
+		unsigned int buttonRepeatTime,
+		byte pressEvent,
+		byte releaseEvent
+	):EventElement() {
+
+	buttonHal = hal;
+	init(buttonPin, buttonHoldTime, buttonRepeatTime, pressEvent, releaseEvent);
+}
+
+void EventButton::init(
+		byte buttonPin,
+		unsigned int buttonHoldTime,
+		unsigned int buttonRepeatTime,
+		byte pressEvent,
+		byte releaseEvent
+	) {
 	// Set button pin to input
 	pin = buttonPin;
-	pinMode(pin, INPUT);
+	buttonHal->HAL_pinMode(pin, INPUT);
 
 	// Activate the internal PullUp resistor
-	digitalWrite(pin, HIGH);
+	buttonHal->HAL_pullUp(pin, HIGH);
 
 	// Reset state of the button
 	stateCurrent = false;
@@ -90,7 +114,7 @@ void EventButton::Check() {
 	if (millisecsToggle != millisecs) {
 		millisecs = millisecsToggle;
 		if (millisecsToggle)
-			debounce = (debounce << 1) | (digitalRead(pin) & 0x1);
+			debounce = (debounce << 1) | (buttonHal->HAL_digitalRead(pin) & 0x1);
 	}
 	statePrevious = stateCurrent;
 	if (debounce == 0x0) {
