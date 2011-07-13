@@ -35,6 +35,7 @@
 
 #include <EventSystem.h>
 #include <EventElement.h>
+#include <HAL_Native.h>
 
 #ifndef EVENTSIMPLELED_H
 #define EVENTSIMPLELED_H
@@ -62,6 +63,21 @@ class EventLed : public EventElement {
 			int ledBlinkOffTime = LED_BLINKTIME
 		);
 		
+		/**
+		 * Create an EventLed object.
+		 *
+		 * @param hal             HAL object to communicate with the Hardware
+		 * @param ledPin          The pin number where the led is connected to.
+		 * @param ledBlinkOnTime  Time the led is on when blinking. Default is 250ms.
+		 * @param ledBlinkOffTime Time the led is off when blinking. Default is 250ms.
+		 */
+		EventLed(
+			HAL *hal,
+			byte ledPin,
+			int ledBlinkOnTime = LED_BLINKTIME,
+			int ledBlinkOffTime = LED_BLINKTIME
+		);
+
 		/**
 		 * Check the state of the led and process Blink actions.
 		 */
@@ -105,12 +121,14 @@ class EventLed : public EventElement {
 		 */
 		boolean isOff() { return state == LED_OFF; };
 	protected:
-		byte pin;       ///< Pin number of the arduino board.
-		byte state;     ///< state of the led 255 is on 0 is off.
-		byte lastEvent; ///< Last event that was requested for this led.
-		unsigned long startTime;      ///< Time the Blink started.
-		unsigned int blinkOnTime;     ///< Time a blinking led stays on.
-		unsigned int blinkOffTime;    ///< Time a blinking led stays off.
+		void init(byte ledPin, int ledBlinkOnTime, int ledBlinkOffTime);
+		HAL *ledHal;               ///< HAL Object
+		byte pin;                  ///< Pin number of the arduino board.
+		byte state;                ///< state of the led 255 is on 0 is off.
+		byte lastEvent;            ///< Last event that was requested for this led.
+		unsigned long startTime;   ///< Time the Blink started.
+		unsigned int blinkOnTime;  ///< Time a blinking led stays on.
+		unsigned int blinkOffTime; ///< Time a blinking led stays off.
 };
 
 #endif

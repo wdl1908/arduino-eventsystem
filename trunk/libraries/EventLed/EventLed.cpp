@@ -42,9 +42,29 @@ EventLed::EventLed(
 		int ledBlinkOffTime
 	):EventElement() {
 
+	ledHal = &nativePinHAL;
+	init(ledPin, ledBlinkOnTime, ledBlinkOffTime);
+}
+
+EventLed::EventLed(
+		HAL *hal,
+		byte ledPin,
+		int ledBlinkOnTime,
+		int ledBlinkOffTime
+	):EventElement() {
+
+	ledHal = hal;
+	init(ledPin, ledBlinkOnTime, ledBlinkOffTime);
+}
+
+void EventLed::init(
+		byte ledPin,
+		int ledBlinkOnTime,
+		int ledBlinkOffTime
+	) {
 	// Set the pin to output
 	pin = ledPin;
-	pinMode(pin, OUTPUT);
+	ledHal->HAL_pinMode(pin, OUTPUT);
 	
 	// Turn the led off
 	Off();
@@ -61,11 +81,11 @@ void EventLed::Check() {
 		time = millis();
 		if (isOn() && startTime + blinkOnTime < time) {
 			state = LED_OFF;
-			digitalWrite(pin, state);
+			ledHal->HAL_digitalWrite(pin, state);
 			startTime = time;
 		} else if (isOff() && startTime + blinkOffTime < time) {
 			state = LED_ON;
-			digitalWrite(pin, state);
+			ledHal->HAL_digitalWrite(pin, state);
 			startTime = time;
 		}
 	}
@@ -99,13 +119,13 @@ void EventLed::HandleEvent(byte event, int param) {
 
 void EventLed::On() {
 	state = LED_ON;
-	digitalWrite(pin, state);
+	ledHal->HAL_digitalWrite(pin, state);
 	lastEvent = Events::EV_LED_ON;
 }
 
 void EventLed::Off() {
 	state = LED_OFF;
-	digitalWrite(pin, state);
+	ledHal->HAL_digitalWrite(pin, state);
 	lastEvent = Events::EV_LED_OFF;
 }
 
@@ -119,7 +139,7 @@ void EventLed::Toggle() {
 
 void EventLed::Blink() {
 	state = LED_ON;
-	digitalWrite(pin, state);
+	ledHal->HAL_digitalWrite(pin, state);
 	startTime = millis();
 	lastEvent = Events::EV_LED_BLINK;
 }

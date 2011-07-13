@@ -38,6 +38,7 @@
 
 #include <EventSystem.h>
 #include <EventElement.h>
+#include <HAL_Native.h>
 
 #ifndef EVENTBUTTON_H
 #define EVENTBUTTON_H
@@ -66,13 +67,34 @@ class EventButton : public EventElement {
 			byte pressEvent = Events::EV_BUTTON_PRESS,
 			byte releaseEvent = Events::EV_BUTTON_RELEASE
 		);
-		
+
+		/**
+		 * Create an EventButton object.
+		 *
+		 * @param hal              HAL object to communicate with the Hardware
+		 * @param buttonPin        The pin number of the digital pin the button is connected to.
+		 * @param buttonHoldTime   The time to wait until the button is considered in the hold state.
+		 * @param buttonRepeatTime The time between repeats.
+		 * @param pressEvent       Event to generate when the button is pressed default is Events::EV_BUTTON_PRESS.
+		 * @param releaseEvent     Event to generate when the button is released default is Events::EV_BUTTON_RELEASE.
+		 */
+		EventButton(
+			HAL *hal,
+			byte buttonPin, 
+			unsigned int buttonHoldTime = 0, 
+			unsigned int buttonRepeatTime = 0,
+			byte pressEvent = Events::EV_BUTTON_PRESS,
+			byte releaseEvent = Events::EV_BUTTON_RELEASE
+		);
+
 		/**
 		 * Check the button and generate events when the button state changes.
 		 */
 		virtual void Check();
 
 	private:
+		void init(byte buttonPin, unsigned int buttonHoldTime, unsigned int buttonRepeatTime, byte pressEvent, byte releaseEvent);
+		HAL *buttonHal;             ///< HAL Object
 		byte pin;                   ///< Pin number of the arduino board.
 		unsigned millisecs : 1;     ///< Toggle every ms.
 		unsigned debounce : 4;      ///< debounce shift register.
