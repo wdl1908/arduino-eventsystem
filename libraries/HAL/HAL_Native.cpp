@@ -59,7 +59,7 @@ int  HAL_Native::HAL_analogRead(byte pin) {
 }
 
 void HAL_Native::HAL_analogWrite(byte pin, byte val) {
-	return analogWrite(pin, val);
+	analogWrite(pin, val);
 }
 
 HAL_Native nativePinHAL = HAL_Native();
