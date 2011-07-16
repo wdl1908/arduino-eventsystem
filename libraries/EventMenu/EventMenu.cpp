@@ -107,7 +107,7 @@ void EventMenuItem::addChild(EventMenuItem *child) {
 	}
 }
 
-void EventMenuItem::Display(LiquidCrystal *lcd, byte line, boolean active) {
+void EventMenuItem::Display(HALLiquidCrystal *lcd, byte line, boolean active) {
 	currentLine = line;
 	lcd->setCursor(0, line);
 	if (active) {
@@ -167,7 +167,7 @@ EventMenuItem *EventMenuItem::HandleEvent(byte event, byte rows, byte cols) {
 	}
 }
 
-EventMenuRoot::EventMenuRoot(LiquidCrystal *lcdDisplay, byte maxCols, byte maxRows) : EventMenuItem("Root"), EventElement() {
+EventMenuRoot::EventMenuRoot(HALLiquidCrystal *lcdDisplay, byte maxCols, byte maxRows) : EventMenuItem("Root"), EventElement() {
 	rows = maxRows;
 	cols = maxCols;
 	lcd = lcdDisplay;
