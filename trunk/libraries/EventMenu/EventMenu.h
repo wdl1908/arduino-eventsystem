@@ -35,7 +35,7 @@
 
 #include <EventSystem.h>
 #include <EventElement.h>
-#include <LiquidCrystal.h>
+#include <HALLiquidCrystal.h>
 
 #ifndef  EVENTMENU_H
 #define  EVENTMENU_H
@@ -52,7 +52,7 @@ class EventMenuItem {
 		EventMenuItem(char *menuName, byte eventCode = Events::EV_NONE, int param = 0);
 		virtual void addChild(EventMenuItem *child);
 		EventMenuItem *HandleEvent(byte event, byte rows, byte cols);
-		void Display(LiquidCrystal *lcd, byte line, boolean active = false);
+		void Display(HALLiquidCrystal *lcd, byte line, boolean active = false);
 
 	protected:
 		EventMenuItem *parent;
@@ -70,12 +70,12 @@ class EventMenuItem {
 
 class EventMenuRoot : public EventMenuItem, EventElement {
 	public:
-		EventMenuRoot(LiquidCrystal *lcdDisplay, byte maxCols, byte maxRows);
+		EventMenuRoot(HALLiquidCrystal *lcdDisplay, byte maxCols, byte maxRows);
 		virtual void addChild(EventMenuItem *child);
 		virtual void HandleEvent(byte event, int param);
 		void Display();
 	private:
-		LiquidCrystal *lcd;
+		HALLiquidCrystal *lcd;
 		byte rows;
 		byte cols;
 		EventMenuItem *current;
