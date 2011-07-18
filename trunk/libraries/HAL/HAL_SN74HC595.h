@@ -48,11 +48,15 @@ class HAL_SN74HC595 : public HAL {
 		void HAL_pullUp(byte pin, byte val);
 		int  HAL_analogRead(byte pin);
 		void HAL_analogWrite(byte pin, byte val);
+		void HAL_pause();
+		void HAL_resume();
 	private:
+		boolean paused;
 		byte dataPin;
 		byte clockPin;
 		byte latchPin;
 		byte outputVal;
+		void HAL_send();
 };
 
 #endif

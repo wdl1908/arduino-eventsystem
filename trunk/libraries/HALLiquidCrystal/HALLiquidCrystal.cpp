@@ -68,15 +68,15 @@ void HALLiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t
   _rs_pin = rs;
   _rw_pin = rw;
   _enable_pin = enable;
-  
+
   _data_pins[0] = d0;
   _data_pins[1] = d1;
   _data_pins[2] = d2;
-  _data_pins[3] = d3; 
+  _data_pins[3] = d3;
   _data_pins[4] = d4;
   _data_pins[5] = d5;
   _data_pins[6] = d6;
-  _data_pins[7] = d7; 
+  _data_pins[7] = d7;
 
   lcdHal->HAL_pinMode(_rs_pin, OUTPUT);
   // we can save 1 pin by not using RW. Indicate by passing 255 instead of pin#
@@ -84,13 +84,13 @@ void HALLiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t
     lcdHal->HAL_pinMode(_rw_pin, OUTPUT);
   }
   lcdHal->HAL_pinMode(_enable_pin, OUTPUT);
-  
+
   if (fourbitmode)
     _displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
   else 
     _displayfunction = LCD_8BITMODE | LCD_1LINE | LCD_5x8DOTS;
-  
-  begin(16, 1);  
+
+  begin(16, 1);
 }
 
 void HALLiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
@@ -109,13 +109,15 @@ void HALLiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
   // according to datasheet, we need at least 40ms after power rises above 2.7V
   // before sending commands. Arduino can turn on way befer 4.5V so we'll wait 50
   delayMicroseconds(50000); 
+  lcdHal->HAL_pause();
   // Now we pull both RS and R/W low to begin commands
   lcdHal->HAL_digitalWrite(_rs_pin, LOW);
   lcdHal->HAL_digitalWrite(_enable_pin, LOW);
   if (_rw_pin != 255) { 
     lcdHal->HAL_digitalWrite(_rw_pin, LOW);
   }
-  
+  lcdHal->HAL_resume();
+
   //put the LCD into 4 bit or 8 bit mode
   if (! (_displayfunction & LCD_8BITMODE)) {
     // this is according to the hitachi HD44780 datasheet
@@ -128,7 +130,7 @@ void HALLiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
     // second try
     write4bits(0x03);
     delayMicroseconds(4500); // wait min 4.1ms
-    
+
     // third go!
     write4bits(0x03); 
     delayMicroseconds(150);
@@ -277,13 +279,15 @@ inline void HALLiquidCrystal::write(uint8_t value) {
 
 // write either command or data, with automatic 4/8-bit selection
 void HALLiquidCrystal::send(uint8_t value, uint8_t mode) {
+  lcdHal->HAL_pause();
   lcdHal->HAL_digitalWrite(_rs_pin, mode);
 
   // if there is a RW pin indicated, set it low to Write
   if (_rw_pin != 255) { 
     lcdHal->HAL_digitalWrite(_rw_pin, LOW);
   }
-  
+  lcdHal->HAL_resume();
+
   if (_displayfunction & LCD_8BITMODE) {
     write8bits(value); 
   } else {
@@ -294,7 +298,7 @@ void HALLiquidCrystal::send(uint8_t value, uint8_t mode) {
 
 void HALLiquidCrystal::pulseEnable(void) {
   lcdHal->HAL_digitalWrite(_enable_pin, LOW);
-  delayMicroseconds(1);    
+  delayMicroseconds(1);
   lcdHal->HAL_digitalWrite(_enable_pin, HIGH);
   delayMicroseconds(1);    // enable pulse must be >450ns
   lcdHal->HAL_digitalWrite(_enable_pin, LOW);
@@ -302,19 +306,23 @@ void HALLiquidCrystal::pulseEnable(void) {
 }
 
 void HALLiquidCrystal::write4bits(uint8_t value) {
+  lcdHal->HAL_pause();
   for (int i = 0; i < 4; i++) {
     lcdHal->HAL_pinMode(_data_pins[i], OUTPUT);
     lcdHal->HAL_digitalWrite(_data_pins[i], (value >> i) & 0x01);
   }
+  lcdHal->HAL_resume();
 
   pulseEnable();
 }
 
 void HALLiquidCrystal::write8bits(uint8_t value) {
+  lcdHal->HAL_pause();
   for (int i = 0; i < 8; i++) {
     lcdHal->HAL_pinMode(_data_pins[i], OUTPUT);
     lcdHal->HAL_digitalWrite(_data_pins[i], (value >> i) & 0x01);
   }
-  
+  lcdHal->HAL_resume();
+
   pulseEnable();
 }
