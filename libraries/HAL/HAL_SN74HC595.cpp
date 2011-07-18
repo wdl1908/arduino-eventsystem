@@ -36,6 +36,7 @@
 #include <HAL_SN74HC595.h>
 
 HAL_SN74HC595::HAL_SN74HC595(byte data, byte clock, byte latch) {
+	paused = false;
 	dataPin = data;
 	clockPin = clock;
 	latchPin = latch;
@@ -53,11 +54,11 @@ int  HAL_SN74HC595::HAL_digitalRead(byte pin) {
 }
 
 void HAL_SN74HC595::HAL_digitalWrite(byte pin, byte val) {
-	outputVal &= ~(0x01 << (pin - 1));
-	outputVal |= ((val != 0) << (pin - 1));
-	digitalWrite(latchPin, LOW);
-	shiftOut(dataPin, clockPin, MSBFIRST, outputVal);
-	digitalWrite(latchPin, HIGH);
+	outputVal &= ~(0x01 << pin);
+	outputVal |= ((val != 0) << pin);
+	if (!paused) {
+		HAL_send();
+	}
 }
 
 void HAL_SN74HC595::HAL_pullUp(byte pin, byte val) {
@@ -70,4 +71,19 @@ int  HAL_SN74HC595::HAL_analogRead(byte pin) {
 
 void HAL_SN74HC595::HAL_analogWrite(byte pin, byte val) {
 	// Nothing todo only digital outputs with SN74HC595
+}
+
+void HAL_SN74HC595::HAL_pause() {
+	paused = true;
+}
+
+void HAL_SN74HC595::HAL_resume() {
+	paused = false;
+	HAL_send();
+}
+	
+void HAL_SN74HC595::HAL_send() {
+	digitalWrite(latchPin, LOW);
+	shiftOut(dataPin, clockPin, MSBFIRST, outputVal);
+	digitalWrite(latchPin, HIGH);
 }

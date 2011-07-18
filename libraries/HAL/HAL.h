@@ -47,6 +47,8 @@ class HAL {
 		virtual void HAL_pullUp(byte pin, byte val) {};
 		virtual int  HAL_analogRead(byte pin) {};
 		virtual void HAL_analogWrite(byte pin, byte val) {};
+		virtual void HAL_pause() {};
+		virtual void HAL_resume() {};
 };
 
 #endif
