@@ -41,6 +41,7 @@
 class HAL {
 	public:
 		HAL();
+		virtual void HAL_begin() {};
 		virtual void HAL_pinMode(byte pin, byte mode) {};
 		virtual int  HAL_digitalRead(byte pin) {};
 		virtual void HAL_digitalWrite(byte pin, byte val) {};

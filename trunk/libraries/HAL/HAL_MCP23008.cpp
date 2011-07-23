@@ -40,7 +40,9 @@ HAL_MCP23008::HAL_MCP23008(byte addr) {
 	i2cPinMode = 0xFF;
 	i2cData = 0x00;
 	i2cPullUp = 0x00;
-	
+}
+
+void HAL_MCP23008::HAL_begin() {
 	Wire.begin();
 
 	Wire.beginTransmission(i2cAddr);

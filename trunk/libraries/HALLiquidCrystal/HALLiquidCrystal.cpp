@@ -78,6 +78,14 @@ void HALLiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t
   _data_pins[6] = d6;
   _data_pins[7] = d7;
 
+  if (fourbitmode)
+    _displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
+  else 
+    _displayfunction = LCD_8BITMODE | LCD_1LINE | LCD_5x8DOTS;
+}
+
+void HALLiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
+  lcdHal->HAL_begin();
   lcdHal->HAL_pinMode(_rs_pin, OUTPUT);
   // we can save 1 pin by not using RW. Indicate by passing 255 instead of pin#
   if (_rw_pin != 255) { 
@@ -85,15 +93,6 @@ void HALLiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t
   }
   lcdHal->HAL_pinMode(_enable_pin, OUTPUT);
 
-  if (fourbitmode)
-    _displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
-  else 
-    _displayfunction = LCD_8BITMODE | LCD_1LINE | LCD_5x8DOTS;
-
-  begin(16, 1);
-}
-
-void HALLiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
   if (lines > 1) {
     _displayfunction |= LCD_2LINE;
   }

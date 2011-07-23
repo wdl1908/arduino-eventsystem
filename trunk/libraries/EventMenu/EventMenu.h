@@ -71,6 +71,7 @@ class EventMenuItem {
 class EventMenuRoot : public EventMenuItem, EventElement {
 	public:
 		EventMenuRoot(HALLiquidCrystal *lcdDisplay, byte maxCols, byte maxRows);
+		void begin();
 		virtual void addChild(EventMenuItem *child);
 		virtual void HandleEvent(byte event, int param);
 		void Display();

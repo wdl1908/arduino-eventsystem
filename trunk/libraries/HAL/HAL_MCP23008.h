@@ -58,6 +58,7 @@
 class HAL_MCP23008: public HAL {
 	public:
 		HAL_MCP23008(byte addr);
+		void HAL_begin();
 		void HAL_pinMode(byte pin, byte mode);
 		int  HAL_digitalRead(byte pin);
 		void HAL_digitalWrite(byte pin, byte val);
