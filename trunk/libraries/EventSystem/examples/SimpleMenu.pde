@@ -73,6 +73,8 @@ void setup() {
 	Menu1.addChild(&Menu13);
 	Menu2.addChild(&Menu21);
 	Menu3.addChild(&Menu31);
+	Root.begin();
+
 	systemEventQueue.enqueueEvent(Events::EV_PAINT, 0);
 }
 

@@ -74,6 +74,8 @@ void setup() {
 	Root.addChild(&Menu3);
 	Root.addChild(&Menu4);
 	Root.addChild(&Menu5);
+	Root.begin();
+
 	systemEventQueue.enqueueEvent(Events::EV_PAINT, 0);
 }
 
