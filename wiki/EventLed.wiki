@@ -3,21 +3,21 @@
 A led must be connected to GND on a digital pin with a serie resistor.
 
 
-==Construct a Led Object==
+== Construct a Led Object ==
 
 {{{
 EventLed led = EventLed(10);
 }}}
 
-==Parameters==
+== Parameters ==
 
   * *ledPin*          The pin number where the led is connected to.
   * *ledBlinkOnTime*  Time the led is on when blinking. Default is 250ms.
   * *ledBlinkOffTime* Time the led is off when blinking. Default is 250ms.
 
-==Events Consumed==
+== Events Consumed ==
 
-  * *EV_LED_ON*
-  * *EV_LED_OFF*
-  * *EV_LED_TOGGLE*
-  * *EV_LED_BLINK*
+  * *Events::EV_LED_ON*
+  * *Events::EV_LED_OFF*
+  * *Events::EV_LED_TOGGLE*
+  * *Events::EV_LED_BLINK*
