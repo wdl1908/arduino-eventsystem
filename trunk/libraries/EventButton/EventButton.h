@@ -55,10 +55,10 @@ class EventButton : public EventElement {
 		 * Create an EventButton object.
 		 *
 		 * @param buttonPin        The pin number of the digital pin the button is connected to.
-		 * @param buttonHoldTime   The time to wait until the button is considered in the hold state.
-		 * @param buttonRepeatTime The time between repeats.
-		 * @param pressEvent       Event to generate when the button is pressed default is Events::EV_BUTTON_PRESS.
-		 * @param releaseEvent     Event to generate when the button is released default is Events::EV_BUTTON_RELEASE.
+		 * @param buttonHoldTime   The time to wait until the button is considered in the hold state, default is 0 (no repeat).
+		 * @param buttonRepeatTime The time between repeats, default is 0 (no repeat).
+		 * @param pressEvent       Event to generate when the button is pressed, default is Events::EV_BUTTON_PRESS.
+		 * @param releaseEvent     Event to generate when the button is released, default is Events::EV_BUTTON_RELEASE.
 		 */
 		EventButton(
 			byte buttonPin, 
