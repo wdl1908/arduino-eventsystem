@@ -33,7 +33,7 @@
  *
  */
 
-#include <LiquidCrystal.h>
+#include <HALLiquidCrystal.h>
 #include <EventMenu.h>
 
 // FIXME should be in PROGMEM
@@ -172,6 +172,9 @@ EventMenuRoot::EventMenuRoot(HALLiquidCrystal *lcdDisplay, byte maxCols, byte ma
 	cols = maxCols;
 	lcd = lcdDisplay;
 	current = 0;
+}
+
+void EventMenuRoot::begin() {
 	lcd->begin(cols, rows);
 	lcd->createChar(ARROW_UP,         arrow_up);
 	lcd->createChar(ARROW_DOWN,       arrow_down);
